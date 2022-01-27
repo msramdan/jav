@@ -67,6 +67,7 @@ class File extends CI_Controller
 		is_allowed($this->uri->segment(1), 'create');
 		$data = array(
 			'kodeunik' => $this->File_model->get_ref_no(),
+			'type_insurer' => $this->Insurer_model->get_all_type_insurer(),
 			'adjuster' => $this->Adjuster_model->get_all(),
 			'secretary' => $this->Secretary_model->get_all(),
 			'remark' => $this->Remark_model->get_all(),
@@ -120,8 +121,35 @@ class File extends CI_Controller
 				'broker_id' => $this->input->post('broker_id', TRUE),
 				'user_id' => $this->input->post('user_id', TRUE),
 			);
-
 			$this->File_model->insert($data);
+			$file_id =  $this->db->insert_id();
+			//insert yang detail insurer baru
+			$insurer_id       = $_POST['insurer_id'];
+			$type_insurer_id       	  = $_POST['type_insurer_id'];
+			$jumlah_data = count($insurer_id);
+			for ($i = 0; $i < $jumlah_data; $i++) {
+				$detail_insurer['file_id'] = $file_id;
+				$detail_insurer['insurer_id'] = $insurer_id[$i];
+				$detail_insurer['type_insurer_id'] = $type_insurer_id[$i];
+				$this->db->insert('detail_insurer', $detail_insurer);
+			}
+
+			//insert yang detail remark baru
+			$remark_id       = $_POST['remark_id'];
+			$secretary_id    = $_POST['secretary_id'];
+			$date       	  = $_POST['date'];
+			$fee       	  = $_POST['fee'];
+			$jumlah_data2 = count($remark_id);
+			for ($i = 0; $i < $jumlah_data2; $i++) {
+				$remark['file_id'] = $file_id;
+				$remark['remark_id'] = $remark_id[$i];
+				$remark['secretary_id'] = $secretary_id[$i];
+				$remark['fee'] = $fee[$i];
+				$remark['date'] = $date[$i];
+				$this->db->insert('detail_remark', $remark);
+			}
+
+
 			$this->session->set_flashdata('message', 'Create Record Success');
 			redirect(site_url('file'));
 		}

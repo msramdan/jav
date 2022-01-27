@@ -16,7 +16,7 @@
 					<table id="" class="table  table-bordered table-hover table-td-valign-middle">
 						<tr>
 							<td >Menu <?php echo form_error('menu_id') ?></td>
-							<td><select name="menu_id" class="form-control theSelect">
+							<td><select name="menu_id" class="form-control theSelect" style="width: 100%;">
 									<option value="">-- Pilih -- </option>
 									<?php foreach ($menu as $key => $data) { ?>
 										<?php if ($menu_id == $data->menu_id) { ?>
