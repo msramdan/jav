@@ -135,6 +135,7 @@ class File extends CI_Controller
 			$data = array(
 				'button' => 'Update',
 				'adjuster' => $this->Adjuster_model->get_all(),
+				'type_insurer' => $this->Insurer_model->get_all_type_insurer(),
 				'secretary' => $this->Secretary_model->get_all(),
 				'remark' => $this->Remark_model->get_all(),
 				'insurer' => $this->Insurer_model->get_all(),
@@ -178,21 +179,37 @@ class File extends CI_Controller
 			//delete detail insurer
 			$this->db->where('file_id', $this->input->post('file_id', TRUE));
 			$this->db->delete('detail_insurer');
-			//insert yang baru
+			//insert yang detail insurer baru
 			$insurer_id       = $_POST['insurer_id'];
-			$type       	  = $_POST['type'];
+			$type_insurer_id       	  = $_POST['type_insurer_id'];
 			$jumlah_data = count($insurer_id);
 			for ($i = 0; $i < $jumlah_data; $i++) {
 				$data['file_id'] = $this->input->post('file_id', TRUE);
 				$data['insurer_id'] = $insurer_id[$i];
-				$data['type'] = $type[$i];
+				$data['type_insurer_id'] = $type_insurer_id[$i];
 				$this->db->insert('detail_insurer', $data);
 			}
 
+			// delete detail remark
+			$this->db->where('file_id', $this->input->post('file_id', TRUE));
+			$this->db->delete('detail_remark');
+			//insert yang detail remark baru
+			$remark_id       = $_POST['remark_id'];
+			$secretary_id    = $_POST['secretary_id'];
+			$date       	  = $_POST['date'];
+			$fee       	  = $_POST['fee'];
+			$jumlah_data2 = count($remark_id);
+			for ($i = 0; $i < $jumlah_data2; $i++) {
+				$remark['file_id'] = $this->input->post('file_id', TRUE);
+				$remark['remark_id'] = $remark_id[$i];
+				$remark['secretary_id'] = $secretary_id[$i];
+				$remark['fee'] = $fee[$i];
+				$remark['date'] = $date[$i];
+				$this->db->insert('detail_remark', $remark);
+			}
 
 
-
-			$data = array(
+			$file_data = array(
 				'ref_no' => $this->input->post('ref_no', TRUE),
 				'date_of_receive' => $this->input->post('date_of_receive', TRUE),
 				'adjuster_id' => $this->input->post('adjuster_id', TRUE),
@@ -209,7 +226,7 @@ class File extends CI_Controller
 				'user_id' => $this->input->post('user_id', TRUE),
 			);
 
-			$this->File_model->update($this->input->post('file_id', TRUE), $data);
+			$this->File_model->update($this->input->post('file_id', TRUE), $file_data);
 			$this->session->set_flashdata('message', 'Update Record Success');
 			redirect(site_url('file'));
 		}

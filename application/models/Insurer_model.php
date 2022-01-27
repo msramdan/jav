@@ -10,6 +10,9 @@ class Insurer_model extends CI_Model
     public $id = 'insurer_id';
     public $order = 'DESC';
 
+	public $table2 = 'type_insurer';
+    public $id2 = 'type_insurer_id';
+
     function __construct()
     {
         parent::__construct();
@@ -20,6 +23,12 @@ class Insurer_model extends CI_Model
     {
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
+    }
+
+	function get_all_type_insurer()
+    {
+        $this->db->order_by($this->id2, $this->order);
+        return $this->db->get($this->table2)->result();
     }
 
     // get data by id

@@ -1,7 +1,7 @@
 <div id="content" class="app-content">
 	<form action="<?php echo $action; ?>" method="post">
 		<div class="row mb-3">
-			<div class="col-xl-6 ui-sortable">
+			<div class="col-md-6 ui-sortable">
 				<div class="panel panel-inverse" data-sortable-id="form-stuff-1" data-init="true">
 					<div class="panel-heading ui-sortable-handle">
 						<h4 class="panel-title">Form Controls</h4>
@@ -125,7 +125,7 @@
 			</div>
 
 			<!-- insurer -->
-			<div class="col-xl-6 ui-sortable">
+			<div class="col-md-6 ui-sortable">
 				<div class="panel panel-inverse" data-sortable-id="form-stuff-3" data-init="true">
 					<div class="panel-heading ui-sortable-handle">
 						<h4 class="panel-title">Detail Insurer</h4>
@@ -145,13 +145,30 @@
 									<?php
 									$detail_file = $this->db->query("SELECT * from detail_insurer join insurer on insurer.insurer_id =detail_insurer.insurer_id  where detail_insurer.file_id='$file_id' order BY detail_insurer_id  ASC")->result();
 									foreach ($detail_file as $row) { ?>
-										<tr id="<?= $row->detail_insurer_id ?>">
+										<tr id="detail_file<?= $row->detail_insurer_id ?>">
 											<td style="width: 45%;">
-												<input readonly type="hidden" class="form-control" name="insurer_id[]" id="" placeholder="" value="<?= $row->insurer_id ?>" />
-												<input readonly type="text" class="form-control" name="" id="" value="<?= $row->insurer_code ?> - <?= $row->insurer_name ?>" />
+												<select name="insurer_id[]" class="form-control">
+													<option style="color: black;" value="">-- Pilih -- </option>
+													<?php foreach ($insurer as $key => $rows) { ?>
+														<?php if ($row->insurer_id == $rows->insurer_id) { ?>
+															<option style="color: black;" value="<?php echo $rows->insurer_id ?>" selected><?php echo $rows->insurer_code ?> - <?php echo $rows->insurer_name ?></option>
+														<?php } else { ?>
+															<option style="color: black;" value="<?php echo $rows->insurer_id ?>"><?php echo $rows->insurer_code ?> - <?php echo $rows->insurer_name ?></option>
+														<?php } ?>
+													<?php } ?>
+												</select>
 											</td>
 											<td style="width: 45%;">
-												<input readonly type="text" class="form-control" name="type[]" id="" placeholder="" value="<?= $row->type ?>" />
+												<select name="type_insurer_id[]" class="form-control">
+													<option style="color: black;" value="">-- Pilih -- </option>
+													<?php foreach ($type_insurer as $key => $rows) { ?>
+														<?php if ($row->type_insurer_id == $rows->type_insurer_id) { ?>
+															<option style="color: black;" value="<?php echo $rows->type_insurer_id ?>" selected> <?php echo $rows->type_insurer_name ?></option>
+														<?php } else { ?>
+															<option style="color: black;" value="<?php echo $rows->type_insurer_id ?>"> <?php echo $rows->type_insurer_name ?></option>
+														<?php } ?>
+													<?php } ?>
+												</select>
 											</td>
 											<td style="width: 5%;"><button type="button" name="" id="" class="btn btn-danger btn-sm btn_remove_data"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
 										</tr>
@@ -175,12 +192,56 @@
 								<tr>
 									<th style="width: 200px;">Current Position</th>
 									<th style="width: 100px;">Date</th>
-									<th style="width: 100px;">Fee(%)</th>
+									<th style="width: 100px;">Fee (%)</th>
 									<th style="width: 200px;">Secrtry</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
+								<?php if ($button == 'Update') { ?>
+									<?php
+									$detail_remark = $this->db->query("SELECT * from detail_remark
+									join remark on remark.remark_id =detail_remark.remark_id
+									left join secretary on secretary.secretary_id =detail_remark.secretary_id
+									where detail_remark.file_id='$file_id' order BY detail_remark_id  ASC ")->result();
+									foreach ($detail_remark as $row) { ?>
+										<tr id="detil_remark<?= $row->detail_remark_id ?>">
+											<td>
+												<select required name="remark_id[]" class="form-control">
+													<option style="color: black;" value="">-- Pilih -- </option>
+													<?php foreach ($remark as $key => $data) { ?>
+														<?php if ($row->remark_id == $data->remark_id) { ?>
+															<option style="color: black;" value="<?php echo $data->remark_id ?>" selected><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option>
+														<?php } else { ?>
+															<option style="color: black;" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option>
+														<?php } ?>
+													<?php } ?>
+												</select>
+
+											</td>
+											<td>
+												<input type="date" class="form-control" name="date[]" placeholder="" value="<?= $row->date ?>" />
+											</td>
+											<td>
+												<input type="number" class="form-control" name="fee[]" placeholder="" value="<?= $row->fee ?>" />
+											</td>
+											<td>
+												<select name="secretary_id[]" class="form-control">
+													<option style="color: black;" value="">-- Pilih -- </option>
+													<?php foreach ($secretary as $key => $rows) { ?>
+														<?php if ($row->secretary_id == $rows->secretary_id) { ?>
+															<option style="color: black;" value="<?php echo $rows->secretary_id ?>" selected><?php echo $rows->secretary_code ?> - <?php echo $rows->secretary_name ?></option>
+														<?php } else { ?>
+															<option style="color: black;" value="<?php echo $rows->secretary_id ?>"><?php echo $rows->secretary_code ?> - <?php echo $rows->secretary_name ?></option>
+														<?php } ?>
+													<?php } ?>
+												</select>
+
+											</td>
+											<td><button type="button" name="" id="" class="btn btn-danger btn-sm btn_remove2"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+										</tr>
+									<?php } ?>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -206,7 +267,7 @@
 		$('#add_berkas').click(function() {
 			i++;
 			$('#dynamic_field').append('<tr id="row' + i +
-				'"><td><select name="insurer_id[]" class="form-control theSelect" style="width: 100%;"><option value=""  style="color:black">-- Pilih -- </option><?php foreach ($insurer as $key => $data) { ?><option  style="color:black" value="<?php echo $data->insurer_id ?>"><?php echo $data->insurer_code ?> - <?php echo $data->insurer_name ?></option><?php } ?></select></td><td style="width: 45%;"><select name="type[]" class="form-control "  style="width: 100%;"><option value="" style="color:black">-- Pilih --</option><option  style="color:black" value="Leader">Leader</option><option  style="color:black" value="Member">Member</option></select></td><td><button type="button" name="remove" id="' +
+				'"><td><select required name="insurer_id[]" class="form-control theSelect" style="width: 100%;"><option value=""  style="color:black">-- Pilih -- </option><?php foreach ($insurer as $key => $data) { ?><option  style="color:black" value="<?php echo $data->insurer_id ?>"><?php echo $data->insurer_code ?> - <?php echo $data->insurer_name ?></option><?php } ?></select></td><td style="width: 45%;"><select required name="type_insurer_id[]" class="form-control "  style="width: 100%;"><option value="" style="color:black">-- Pilih --</option><?php foreach ($type_insurer as $key => $rows) { ?><option style="color: black;" value="<?php echo $rows->type_insurer_id ?>"> <?php echo $rows->type_insurer_name ?></option><?php } ?></select></td><td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
 		});
 
@@ -230,13 +291,19 @@
 		$('#add_berkas2').click(function() {
 			i++;
 			$('#dynamic_field2').append('<tr id="row2' + i +
-				'"><td><select name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input type="date" name="date[]" placeholder="" class="form-control " /></td><td><input type="number" name="fee[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
+				'"><td><select required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input required type="date" name="date[]" placeholder="" class="form-control " /></td><td><input type="number" name="fee[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove2"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
 		});
 
 		$(document).on('click', '.btn_remove2', function() {
 			var button_id = $(this).attr("id");
 			$('#row2' + button_id + '').remove();
+		});
+
+		$(document).on('click', '.btn_remove2', function() {
+			var bid = this.id;
+			var trid = $(this).closest('tr').attr('id');
+			$('#' + trid + '').remove();
 		});
 
 	});

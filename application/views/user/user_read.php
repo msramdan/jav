@@ -1,5 +1,5 @@
 <div id="content" class="app-content">
-<div class="col-xl-6 ui-sortable">
+<div class="col-md-6 ui-sortable">
 <div class="panel panel-inverse" data-sortable-id="form-stuff-1" data-init="true">
 <div class="panel-heading ui-sortable-handle">
 <h4 class="panel-title">User Read</h4>
