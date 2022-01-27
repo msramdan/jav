@@ -26,7 +26,7 @@
 								<div class="panel-body">
 									<table id="data-table-default" class="table table-bordered table-hover table-td-valign-middle text-white">
 										<thead>
-											<tr>
+										<tr class="table-secondary">
 												<th width="1%">No</th>
 												<th>Nama Level</th>
 												<th>View Access</th>

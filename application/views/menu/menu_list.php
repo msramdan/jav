@@ -24,7 +24,7 @@
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover m-b-0 text-white" id="data-table-default">
 							<thead>
-								<tr>
+							<tr class="table-secondary">
 									<th width="1%">No</th>
 									<th>Nama</th>
 									<th>Icon</th>
@@ -86,7 +86,7 @@
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover m-b-0 text-white" id="data-table-default2">
 							<thead>
-								<tr>
+							<tr class="table-secondary">
 									<th width="1%">No</th>
 									<th>Menu</th>
 									<th>Nama Sub Menu</th>

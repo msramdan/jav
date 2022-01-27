@@ -28,6 +28,7 @@ class File extends CI_Controller
 		$data = array(
 			'sett_apps' => $this->Setting_app_model->get_by_id(1),
 			'file_data' => $file,
+			'insurer' => $this->Insurer_model->get_all(),
 		);
 		$this->template->load('template', 'file/file_list', $data);
 	}

@@ -25,7 +25,7 @@
 							<div class="box-body" style="overflow-x: scroll; ">
 								<table id="data-table-default" class="table table-bordered table-hover table-td-valign-middle text-white">
 									<thead>
-										<tr>
+									<tr class="table-secondary">
 											<th style="width: 5%;">No</th>
 											<th>Religion Code</th>
 											<th>Religion Name</th>
