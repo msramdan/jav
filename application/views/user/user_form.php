@@ -37,7 +37,7 @@
 							<?php } ?>
 							<tr>
 								<td >level <?php echo form_error('level_id') ?></td>
-								<td><select name="level_id" class="form-control theSelect" style="width: 100%;">
+								<td><select name="level_id" class="form-control theSelect">
 										<option value="">-- Pilih -- </option>
 										<?php foreach ($level as $key => $data) { ?>
 											<?php if ($level_id == $data->level_id) { ?>
@@ -129,9 +129,12 @@
 	}
 </script>
 
-<script>
-	$(document).ready(function() {
-		$(".theSelect").select2();
-	})
-</script>
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('.theSelect').selectize({
+				sortField: 'text'
+			});
+		});
+	</script>
+
 

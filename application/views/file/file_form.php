@@ -4,7 +4,7 @@
 			<div class="col-md-6 ui-sortable">
 				<div class="panel panel-inverse" data-sortable-id="form-stuff-1" data-init="true">
 					<div class="panel-heading ui-sortable-handle">
-						<h4 class="panel-title">Form Controls</h4>
+						<h4 class="panel-title">Form File Case</h4>
 						<div class="panel-heading-btn">
 							<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 							<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -15,21 +15,21 @@
 					<div class="panel-body">
 						<thead></thead>
 						<tbody>
-							<table id="data-table-default" class="table  table-bordered table-hover table-td-valign-middle table-sm">
+							<table id="data-table-default" class="table  table-bordered table-hover table-td-valign-middle ">
 								<tr>
 									<td style="width: 30%;">Ref No <?php echo form_error('ref_no') ?></td>
 									<td>
 										<?php if ($button == 'Create') { ?>
-											<input type="text" readonly="" class="form-control" name="ref_no" id="ref_no" placeholder="" value="<?= $kodeunik ?>" />
+											<input autocomplete="off" type="text" readonly="" class="form-control" name="ref_no" id="ref_no" placeholder="" value="<?= $kodeunik ?>" />
 										<?php } else { ?>
-											<input type="text" readonly="" class="form-control" name="ref_no" id="ref_no" placeholder="Ref No" value="<?php echo $ref_no; ?>" />
+											<input autocomplete="off" type="text" readonly="" class="form-control" name="ref_no" id="ref_no" placeholder="Ref No" value="<?php echo $ref_no; ?>" />
 										<?php } ?>
 
 									</td>
 								</tr>
 								<tr>
 									<td>Date of Receive <?php echo form_error('date_of_receive') ?></td>
-									<td><input required type="date" class="form-control" name="date_of_receive" id="date_of_receive" placeholder="Date of Receive" value="<?php echo $date_of_receive; ?>" /></td>
+									<td><input autocomplete="off" required type="date" class="form-control" name="date_of_receive" id="date_of_receive" placeholder="Date of Receive" value="<?php echo $date_of_receive; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Adjuster <?php echo form_error('adjuster_id') ?></td>
@@ -80,15 +80,15 @@
 								</tr>
 								<tr>
 									<td>Date of Loss <?php echo form_error('date_of_loss') ?></td>
-									<td><input required type="date" class="form-control" name="date_of_loss" id="date_of_loss" placeholder="Date of Loss" value="<?php echo $date_of_loss; ?>" /></td>
+									<td><input autocomplete="off" required type="date" class="form-control" name="date_of_loss" id="date_of_loss" placeholder="Date of Loss" value="<?php echo $date_of_loss; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Date of Survey <?php echo form_error('date_of_survey') ?></td>
-									<td><input required type="date" class="form-control" name="date_of_survey" id="date_of_survey" placeholder="Date of Survey" value="<?php echo $date_of_survey; ?>" /></td>
+									<td><input autocomplete="off" required type="date" class="form-control" name="date_of_survey" id="date_of_survey" placeholder="Date of Survey" value="<?php echo $date_of_survey; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Policy Number <?php echo form_error('policy_number') ?></td>
-									<td><input required type="text" class="form-control" name="policy_number" id="policy_number" placeholder="Policy Number" value="<?php echo $policy_number; ?>" /></td>
+									<td><input autocomplete="off" required type="text" class="form-control" name="policy_number" id="policy_number" placeholder="Policy Number" value="<?php echo $policy_number; ?>" /></td>
 								</tr>
 
 								<tr>
@@ -97,11 +97,11 @@
 								</tr>
 								<tr>
 									<td>Insurer Ref No <?php echo form_error('insurer_ref_no') ?></td>
-									<td><input required type="text" class="form-control" name="insurer_ref_no" id="insurer_ref_no" placeholder="Insurer Ref No" value="<?php echo $insurer_ref_no; ?>" /></td>
+									<td><input autocomplete="off" required type="text" class="form-control" name="insurer_ref_no" id="insurer_ref_no" placeholder="Insurer Ref No" value="<?php echo $insurer_ref_no; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Insured <?php echo form_error('insured') ?></td>
-									<td><input required type="text" class="form-control" name="insured" id="insured" placeholder="Insured" value="<?php echo $insured; ?>" /></td>
+									<td><input autocomplete="off" required type="text" class="form-control" name="insured" id="insured" placeholder="Insured" value="<?php echo $insured; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Broker <?php echo form_error('broker_id') ?></td>
@@ -116,8 +116,8 @@
 											<?php } ?>
 										</select></td>
 								</tr>
-								<input type="hidden" name="file_id" value="<?php echo $file_id; ?>" />
-								<input type="hidden" class="form-control" name="user_id" id="user_id" placeholder="User Id" value="<?= $this->fungsi->user_login()->user_id ?>" /></td>
+								<input autocomplete="off" type="hidden" name="file_id" value="<?php echo $file_id; ?>" />
+								<input autocomplete="off" type="hidden" class="form-control" name="user_id" id="user_id" placeholder="User Id" value="<?= $this->fungsi->user_login()->user_id ?>" /></td>
 								</thead>
 							</table>
 					</div>
@@ -132,7 +132,7 @@
 					</div>
 					<div class="panel-body">
 						<button style="margin-bottom: 10px;" type="button" name="add_berkas" id="add_berkas" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add Insurer</button>
-						<table class="table table-bordered table-sm" id="dynamic_field">
+						<table class="table table-bordered " id="dynamic_field">
 							<thead>
 								<tr>
 									<th>Insurer name </th>
@@ -187,7 +187,7 @@
 					</div>
 					<div class="panel-body" style="overflow-x: scroll; ">
 						<button style="margin-bottom: 10px;" type="button" name="add_berkas2" id="add_berkas2" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add Remark</button>
-						<table class="table table-bordered table-sm" id="dynamic_field2" style="width: 700px;">
+						<table class="table table-bordered " id="dynamic_field2" style="width: 700px;">
 							<thead>
 								<tr>
 									<th style="width: 200px;">Current Position</th>
@@ -255,12 +255,14 @@
 </div>
 </div>
 </div>
-
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
-		$(".theSelect").select2();
-	})
+		$('.theSelect').selectize({
+			sortField: 'text'
+		});
+	});
 </script>
+
 <script>
 	$(document).ready(function() {
 		var i = 1;
@@ -291,7 +293,7 @@
 		$('#add_berkas2').click(function() {
 			i++;
 			$('#dynamic_field2').append('<tr id="row2' + i +
-				'"><td><select required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input required type="date" name="date[]" placeholder="" class="form-control " /></td><td><input type="number" name="fee[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
+				'"><td><select required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input required type="date" name="date[]" placeholder="" class="form-control " /></td><td><input type="number" name="fee[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_code ?> - <?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove2"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
 		});
 

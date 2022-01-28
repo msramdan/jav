@@ -7,8 +7,8 @@ class Secretary_model extends CI_Model
 {
 
     public $table = 'secretary';
-    public $id = 'secretary_id';
-    public $order = 'DESC';
+    public $id = 'secretary_code';
+    public $order = 'ASC';
 
     function __construct()
     {

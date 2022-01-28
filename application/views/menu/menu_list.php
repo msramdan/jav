@@ -40,7 +40,7 @@
 										<td><?php echo $menu->menu ?></td>
 										<td><?php echo $menu->icon ?></td>
 										<td><?php echo $menu->urutan ?></td>
-										<td style="text-align:center" width="200px">
+										<td style="text-align:center">
 											<?php
 											echo anchor(site_url('menu/read/' . $menu->menu_id), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm"');
 											echo '  ';

@@ -29,7 +29,7 @@
 						<div class="form-group">
 							<label for="exampleInputPassword1">Status Case</label>
 							<select name="status" class="form-control theSelect">
-								<option value="">- Pilih -</option>
+								<option value="">-- Pilih --</option>
 								<?php if (isset($_GET['status'])) { ?>
 									<option value="Receiving" <?php echo $_GET['status'] == 'Receiving' ? 'selected' : 'null' ?>>Receiving</option>
 									<option value="Outstanding" <?php echo $_GET['status'] == 'Outstanding' ? 'selected' : 'null' ?>>Outstanding</option>
@@ -191,9 +191,10 @@
 			$('.delete_data').css('display', 'none')
 		</script>
 	<?php } ?>
-
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function() {
-			$(".theSelect").select2();
-		})
+			$('.theSelect').selectize({
+				sortField: 'text'
+			});
+		});
 	</script>

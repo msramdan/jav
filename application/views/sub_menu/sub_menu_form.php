@@ -49,9 +49,10 @@
 	</div>
 </div>
 
-<script>
+<script type="text/javascript">
 	$(document).ready(function() {
-		$(".theSelect").select2();
-	})
+		$('.theSelect').selectize({
+			sortField: 'text'
+		});
+	});
 </script>
-
