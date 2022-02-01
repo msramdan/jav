@@ -14,6 +14,7 @@
 <table id="data-table-default" class="table table-hover table-bordered table-td-valign-middle">
 	    <tr><td>Remark Code</td><td><?php echo $remark_code; ?></td></tr>
 	    <tr><td>Remark Name</td><td><?php echo $remark_name; ?></td></tr>
+	    <tr><td>Status Case</td><td><?php echo $status_case; ?></td></tr>
 	    <tr><td></td><td><a href="<?php echo site_url('remark') ?>" class="btn btn-default">Cancel</a></td></tr>
 	</table>
 			</div>

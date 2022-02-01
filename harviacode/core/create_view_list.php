@@ -38,7 +38,7 @@ $string.="
         <table id=\"data-table-default\" class=\"table table-bordered table-hover table-td-valign-middle text-white\">
          <thead>
             <tr>
-                <th style="width: 5%;">No</th>";
+                <th>No</th>";
 foreach ($non_pk as $row) {
     $string .= "\n\t\t<th>" . label($row['column_name']) . "</th>";
 }

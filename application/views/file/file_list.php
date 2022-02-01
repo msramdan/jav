@@ -16,7 +16,7 @@
 					</div>
 				</div>
 				<div class="panel-body">
-					<form>
+					<form accept="<?= base_url() ?>file" method="GET">
 						<div class="form-group" style="margin-bottom: 5px;">
 							<label for="exampleInputEmail1">Start Date</label>
 							<input type="date" <?php if (isset($_GET['start_date'])) { ?> value="<?= $_GET['start_date'] ?>" <?php } ?> name="start_date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -135,7 +135,7 @@
 														<td><?php echo $file->insurer_ref_no ?></td>
 														<td><?php echo $file->insured ?></td>
 														<td><?php echo $file->broker_name ?></td>
-														<td><?php echo $file->remark_id ?></td>
+														<td><?php echo remark_name($file->remark_id) ?></td>
 														<td style="text-align:center" width="200px">
 															<?php
 															echo anchor(site_url('file/read/' . encrypt_url($file->file_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
