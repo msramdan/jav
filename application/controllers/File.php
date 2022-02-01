@@ -24,32 +24,60 @@ class File extends CI_Controller
 	public function index()
 	{
 		is_allowed($this->uri->segment(1), null);
-		if( isset($_GET['start_date'])){
-			$start_date =$_GET['start_date'];
-		}else{
-			$start_date ='';
+
+		if (isset($_GET['insurer_id'])) {
+			if (isset($_GET['start_date'])) {
+				$start_date = $_GET['start_date'];
+			} else {
+				$start_date = '';
+			}
+
+			if (isset($_GET['end_date'])) {
+				$end_date = $_GET['end_date'];
+			} else {
+				$end_date = '';
+			}
+
+			if (isset($_GET['status'])) {
+				$status = $_GET['status'];
+			} else {
+				$status = '';
+			}
+
+			if (isset($_GET['insurer_id'])) {
+				$insurer_id = $_GET['insurer_id'];
+			} else {
+				$insurer_id = '';
+			}
+			$file = $this->File_model->get_all_insurer($start_date, $end_date, $status, $insurer_id);
+			
+		} else {
+			if (isset($_GET['start_date'])) {
+				$start_date = $_GET['start_date'];
+			} else {
+				$start_date = '';
+			}
+
+			if (isset($_GET['end_date'])) {
+				$end_date = $_GET['end_date'];
+			} else {
+				$end_date = '';
+			}
+
+			if (isset($_GET['status'])) {
+				$status = $_GET['status'];
+			} else {
+				$status = '';
+			}
+
+			if (isset($_GET['insurer_id'])) {
+				$insurer_id = $_GET['insurer_id'];
+			} else {
+				$insurer_id = '';
+			}
+			$file = $this->File_model->get_all($start_date, $end_date, $status, $insurer_id);
 		}
-
-		if(isset($_GET['end_date'])){
-			$end_date =$_GET['end_date'];
-		}else{
-			$end_date ='';
-		}
-
-		if(isset($_GET['status'])){
-			$status =$_GET['status'];
-		}else{
-			$status ='';
-		}
-
-		if(isset($_GET['insurer_id'])){
-			$insurer_id =$_GET['insurer_id'];
-		}else{
-			$insurer_id ='';
-		}
-
-
-		$file = $this->File_model->get_all($start_date,$end_date,$status,$insurer_id);
+		
 		$data = array(
 			'sett_apps' => $this->Setting_app_model->get_by_id(1),
 			'file_data' => $file,

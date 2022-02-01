@@ -7,6 +7,7 @@ class File_model extends CI_Model
 {
 
 	public $table = 'file';
+	public $table2 = 'detail_insurer';
 	public $id = 'file_id';
 	public $order = 'DESC';
 
@@ -46,10 +47,49 @@ class File_model extends CI_Model
 				$this->db->where_in('remark_id',$list);
 			}
 		}
-
 		$this->db->order_by($this->id, $this->order);
 		return $this->db->get($this->table)->result();
 	}
+
+	function get_all_insurer($start_date = null, $end_date = null, $status = null, $insurer_id = null)
+	{
+		$this->db->join('file', 'file.file_id = detail_insurer.file_id', 'left');
+		$this->db->join('adjuster', 'adjuster.adjuster_id = file.adjuster_id', 'left');
+		$this->db->join('trade', 'trade.trade_id = file.trade_id', 'left');
+		$this->db->join('broker', 'broker.broker_id = file.broker_id', 'left');
+		$this->db->join('user', 'user.user_id = file.user_id', 'left');
+		$this->db->join('type_of_loss', 'type_of_loss.type_of_loss_id = file.type_of_loss_id', 'left');
+		if ($start_date != null) {
+			$this->db->where('create_date >=', $start_date);
+		}
+
+		if ($end_date != null) {
+			$this->db->where('create_date <=', $end_date);
+		}
+		if ($status != null) {
+			if ($status == 'Outstanding') {
+				$cek = $this->db->query("SELECT * FROM remark where status_case='Outstanding'");
+				foreach ($cek->result() as $row) {
+					$list[] = $row->remark_id ;
+				}
+				$this->db->where_in('remark_id',$list);
+
+			} else if ($status == 'Receiving') {
+				$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
+				foreach ($cek->result() as $row) {
+					$list[] = $row->remark_id ;
+				}
+				$this->db->where_in('remark_id',$list);
+			}
+		}
+		if ($insurer_id != null) {
+			$this->db->where('detail_insurer.insurer_id', $insurer_id);
+		}
+
+		$this->db->order_by('file.file_id', $this->order);
+		return $this->db->get($this->table2)->result();
+	}
+
 
 	// get data by id
 	function get_by_id($id)
