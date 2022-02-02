@@ -8,12 +8,6 @@
 			<div class="panel panel-inverse" data-sortable-id="index-1">
 				<div class="panel-heading ui-sortable-handle">
 					<h4 class="panel-title">FILTER</h4>
-					<div class="panel-heading-btn">
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
 				</div>
 				<div class="panel-body">
 					<form accept="<?= base_url() ?>file" method="GET">
@@ -74,12 +68,6 @@
 			<div class="panel panel-inverse" data-sortable-id="index-6">
 				<div class="panel-heading ui-sortable-handle">
 					<h4 class="panel-title">DATA FILE</h4>
-					<div class="panel-heading-btn">
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-warning" data-toggle="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -191,10 +179,9 @@
 			$('.delete_data').css('display', 'none')
 		</script>
 	<?php } ?>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.theSelect').selectize({
-				sortField: 'text'
-			});
+			$(".theSelect").select2();
 		});
 	</script>

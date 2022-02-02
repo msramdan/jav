@@ -49,7 +49,12 @@ class File extends CI_Controller
 			} else {
 				$insurer_id = '';
 			}
-			$file = $this->File_model->get_all_insurer($start_date, $end_date, $status, $insurer_id);
+			if($insurer_id ==''|| $insurer_id ==null ){
+				$file = $this->File_model->get_all($start_date, $end_date, $status, $insurer_id);
+			}else{
+				$file = $this->File_model->get_all_insurer($start_date, $end_date, $status, $insurer_id);
+			}
+			
 			
 		} else {
 			if (isset($_GET['start_date'])) {

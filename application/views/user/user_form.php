@@ -15,28 +15,28 @@
 					<table id="" class="table  table-bordered table-hover table-td-valign-middle">
 						<thead>
 							<tr>
-								<td >Nama User <?php echo form_error('nama_user') ?></td>
+								<td>Nama User <?php echo form_error('nama_user') ?></td>
 								<td><input type="text" class="form-control" name="nama_user" id="nama_user" placeholder="Nama User" value="<?php echo $nama_user; ?>" /></td>
 							</tr>
 							<tr>
-								<td >Username <?php echo form_error('username') ?></td>
+								<td>Username <?php echo form_error('username') ?></td>
 								<td><input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<?php echo $username; ?>" /></td>
 							</tr>
 							<?php if ($this->uri->segment(2) == "create" || $this->uri->segment(2) == "create_action") { ?>
 								<tr>
-									<td >Password <?php echo form_error('password') ?></td>
+									<td>Password <?php echo form_error('password') ?></td>
 									<td><input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>" /></td>
 								</tr>
 							<?php } else { ?>
 								<tr>
-									<td >Password <?php echo form_error('password') ?></td>
+									<td>Password <?php echo form_error('password') ?></td>
 									<td><input type="password" class="form-control" name="password" id="password" placeholder="Password" value="" />
 										<small style="color:white">(Biarkan kosong jika tidak diganti)</small>
 									</td>
 								</tr>
 							<?php } ?>
 							<tr>
-								<td >level <?php echo form_error('level_id') ?></td>
+								<td>level <?php echo form_error('level_id') ?></td>
 								<td><select name="level_id" class="form-control theSelect">
 										<option value="">-- Pilih -- </option>
 										<?php foreach ($level as $key => $data) { ?>
@@ -49,12 +49,12 @@
 									</select></td>
 							</tr>
 							<tr>
-								<td >Email <?php echo form_error('email') ?></td>
+								<td>Email <?php echo form_error('email') ?></td>
 								<td><input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email; ?>" /></td>
 							</tr>
 							<?php if ($this->uri->segment(2) == 'create' || $this->uri->segment(2) == 'create_action') { ?>
 								<tr>
-									<td >photo <?php echo form_error('photo') ?></td>
+									<td>photo <?php echo form_error('photo') ?></td>
 									<td><input type="file" class="form-control" name="photo" id="photo" placeholder="photo" required="" value="" onchange="return validasiEkstensi()" />
 										<!-- <div id="preview"></div> -->
 									</td>
@@ -62,7 +62,7 @@
 							<?php } else { ?>
 								<div class="form-group">
 									<tr>
-										<td >Photo <?php echo form_error('photo') ?></td>
+										<td>Photo <?php echo form_error('photo') ?></td>
 										<td>
 											<a href="#modal-dialog" data-bs-toggle="modal"><img src="<?php echo base_url(); ?>assets/assets/img/user/<?= $photo ?>" style="width: 150px;height: 150px;border-radius: 5%;"></img></a>
 											<input type="hidden" name="photo_lama" value="<?= $photo ?>">
@@ -130,11 +130,9 @@
 </script>
 
 <script type="text/javascript">
-		$(document).ready(function() {
-			$('.theSelect').selectize({
-				sortField: 'text'
-			});
+	$(document).ready(function() {
+		$('.theSelect').selectize({
+			sortField: 'text'
 		});
-	</script>
-
-
+	});
+</script>

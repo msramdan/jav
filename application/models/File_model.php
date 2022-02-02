@@ -35,18 +35,33 @@ class File_model extends CI_Model
 			if ($status == 'Outstanding') {
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Outstanding'");
 				foreach ($cek->result() as $row) {
-					$list[] = $row->remark_id ;
+					$list[] = $row->remark_id;
 				}
-				$this->db->where_in('remark_id',$list);
-
+				$this->db->where_in('remark_id', $list);
 			} else if ($status == 'Receiving') {
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
 				foreach ($cek->result() as $row) {
-					$list[] = $row->remark_id ;
+					$list[] = $row->remark_id;
 				}
-				$this->db->where_in('remark_id',$list);
+				$this->db->where_in('remark_id', $list);
 			}
 		}
+		$this->db->order_by($this->id, $this->order);
+		return $this->db->get($this->table)->result();
+	}
+	function get_all_final()
+	{
+		$this->db->join('adjuster', 'adjuster.adjuster_id = file.adjuster_id', 'left');
+		$this->db->join('trade', 'trade.trade_id = file.trade_id', 'left');
+		$this->db->join('broker', 'broker.broker_id = file.broker_id', 'left');
+		$this->db->join('user', 'user.user_id = file.user_id', 'left');
+		$this->db->join('type_of_loss', 'type_of_loss.type_of_loss_id = file.type_of_loss_id', 'left');
+		$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
+		foreach ($cek->result() as $row) {
+			$list[] = $row->remark_id;
+		}
+		$this->db->where_in('remark_id', $list);
+
 		$this->db->order_by($this->id, $this->order);
 		return $this->db->get($this->table)->result();
 	}
@@ -70,16 +85,15 @@ class File_model extends CI_Model
 			if ($status == 'Outstanding') {
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Outstanding'");
 				foreach ($cek->result() as $row) {
-					$list[] = $row->remark_id ;
+					$list[] = $row->remark_id;
 				}
-				$this->db->where_in('remark_id',$list);
-
+				$this->db->where_in('remark_id', $list);
 			} else if ($status == 'Receiving') {
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
 				foreach ($cek->result() as $row) {
-					$list[] = $row->remark_id ;
+					$list[] = $row->remark_id;
 				}
-				$this->db->where_in('remark_id',$list);
+				$this->db->where_in('remark_id', $list);
 			}
 		}
 		if ($insurer_id != null) {
