@@ -88,15 +88,15 @@
 													<th style="width: 5%;">No</th>
 													<th data-orderable="false">Penginput</th>
 													<th>Ref No</th>
-													<th>Date Of Receive</th>
+													<th>Date of Receive</th>
 													<th>Adjuster</th>
 													<th>Trade</th>
-													<th>Type Of Loss</th>
+													<th>Type of Loss</th>
 													<th>Detail Dol</th>
-													<th>Date Of Loss</th>
-													<th>Date Of Survey</th>
+													<th>Date of Loss</th>
+													<th>Date of Survey</th>
 													<th>Policy Number</th>
-													<th>Situation Of Loss</th>
+													<th>Situation of Loss</th>
 													<th>Insurer Ref No</th>
 													<th>Insured</th>
 													<th>Broker</th>

@@ -103,12 +103,18 @@ function check_access_delete($level_id, $menu_id)
 
 
 //format rupiah
-function rupiah($angka)
+function rupiah($angka =null)
 {
+	if($angka==null){
+		return 0;
+	}else{
+		$hasil_rupiah = number_format($angka, 0, ',', '.');
+		return $hasil_rupiah;
+	}
 
-	$hasil_rupiah = "Rp " . number_format($angka, 0, ',', '.');
-	return $hasil_rupiah;
+	
 }
+
 
 //is_allowed
 function is_allowed($nama_menu, $access = null)

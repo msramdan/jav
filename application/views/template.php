@@ -221,6 +221,11 @@
 		<div class="flash-data" data-flashdata="<?= $this->session->flashdata('message'); ?>"></div>
 		<?php if ($this->session->flashdata('message')) : ?>
 		<?php endif; ?>
+
+		<div class="flash-data2" data-flashdata2="<?= $this->session->flashdata('error'); ?>"></div>
+		<?php if ($this->session->flashdata('error')) : ?>
+		<?php endif; ?>
+
 		<?php echo $contents ?>
 		<script src="<?= base_url() ?>assets/assets/js/vendor.min.js" type="beba54df5f87d24c2458d535-text/javascript"></script>
 		<script src="<?= base_url() ?>assets/assets/js/app.min.js" type="beba54df5f87d24c2458d535-text/javascript"></script>

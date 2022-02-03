@@ -25,16 +25,15 @@
 							<div class="box-body" style="overflow-x: scroll; ">
 								<table id="data-table-default" class="table table-bordered table-hover table-td-valign-middle text-white">
 									<thead>
-										<tr>
+										<tr class="table-secondary">
 											<th>No</th>
 											<th>OR No</th>
 											<th>Ref No</th>
 											<th>OR Date</th>
 											<th>Insurer</th>
 											<th>Currency</th>
-											<th>Total Fee</th>
-											<th>Expense</th>
-											<th>Description</th>
+											<th>Grand Total</th>
+											<th>Status Payment</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -44,21 +43,42 @@
 											<tr>
 												<td><?= $no++ ?></td>
 												<td><?php echo $official_receipt->or_no ?></td>
-												<td><?php echo $official_receipt->file_id ?></td>
+												<td><?php echo $official_receipt->ref_no ?></td>
 												<td><?php echo $official_receipt->or_date ?></td>
-												<td><?php echo $official_receipt->insurer_id ?></td>
-												<td><?php echo $official_receipt->currency_id ?></td>
-												<td><?php echo $official_receipt->total_fee ?></td>
-												<td><?php echo $official_receipt->expense ?></td>
-												<td><?php echo $official_receipt->description ?></td>
-												<td style="text-align:center" width="200px">
+												<td><?php echo $official_receipt->insurer_name ?></td>
+												<td><?php echo $official_receipt->currency_code ?></td>
+												<td><?php echo rupiah($official_receipt->total_fee + $official_receipt->expense - $official_receipt->discount) ?></td>
+												<td><?php if ($official_receipt->status == 'Paid') { ?>
+														<div class="d-grid gap-2">
+															<button class="btn btn-success btn-sm" type="button"><i class="fa fa-check"></i> Paid </button>
+														</div>
+													<?php } else { ?>
+														<div class="d-grid gap-2">
+															<button class="btn btn-warning btn-sm" type="button"><i class="fa fa-times"></i> Unpaid</button>
+														</div>
+													<?php } ?>
+
+												</td>
+												<td style="text-align:center">
 													<?php
+													echo anchor(site_url('official_receipt/print_or/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-print" aria-hidden="true"></i> 1', 'class="btn btn-white btn-sm" target="_blank"');
+													echo '  ';
+													echo anchor(site_url('official_receipt/print_breakdown/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-print" aria-hidden="true"></i> 2', 'class="btn btn-white btn-sm " target="_blank"');
+													echo '  ';
+													echo anchor(site_url('official_receipt/print_invoice/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-print" aria-hidden="true"></i> 3', 'class="btn btn-white btn-sm " target="_blank"');
+													echo '  ';
 													echo anchor(site_url('official_receipt/read/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
 													echo '  ';
 													echo anchor(site_url('official_receipt/update/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 													echo '  ';
-													echo anchor(site_url('official_receipt/delete/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
 													?>
+
+													<?php if($official_receipt->status=='Unpaid'){ ?>
+														<a href="<?= base_url('official_receipt/delete/' .encrypt_url($official_receipt->or_id)) ?>" class="btn btn-danger btn-sm delete_data" delete=""><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
+													<?php }else{ ?>
+														<button href="" class="btn btn-danger btn-sm delete_data" delete="" disabled><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+													<?php } ?>
+													
 												</td>
 											</tr>
 										<?php } ?>

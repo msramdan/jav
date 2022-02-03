@@ -116,6 +116,13 @@
 											<?php } ?>
 										</select></td>
 								</tr>
+								<tr>
+									<td>Total Fee <?php echo form_error('fee_all') ?></td>
+									<td>
+										<input autocomplete="off" required type="text" class="form-control" name="" id="rupiah" placeholder="Total Fee" value="<?php echo rupiah($fee_all) ?>" />
+										<input autocomplete="off" required type="hidden" class="form-control" name="fee_all" id="fee_all" placeholder="Total Fee" value="<?php echo $fee_all; ?>" />
+									</td>
+								</tr>
 								<input autocomplete="off" type="hidden" name="file_id" value="<?php echo $file_id; ?>" />
 								<input autocomplete="off" type="hidden" class="form-control" name="user_id" id="user_id" placeholder="User Id" value="<?= $this->fungsi->user_login()->user_id ?>" /></td>
 								</thead>
@@ -137,6 +144,7 @@
 								<tr>
 									<th>Insurer name </th>
 									<th>Type</th>
+									<th>Fee (%)</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -170,6 +178,9 @@
 													<?php } ?>
 												</select>
 											</td>
+											<td>
+												<input required style="width: 70px;" type="number" class="form-control" name="fee[]" placeholder="" value="<?= $row->fee ?>" />
+											</td>
 											<td style="width: 5%;"><button type="button" name="" id="" class="btn btn-danger btn-sm btn_remove_data"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
 										</tr>
 									<?php } ?>
@@ -187,13 +198,12 @@
 					</div>
 					<div class="panel-body" style="overflow-x: scroll; ">
 						<button style="margin-bottom: 10px;" type="button" name="add_berkas2" id="add_berkas2" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add Remark</button>
-						<table class="table table-bordered " id="dynamic_field2" style="width: 700px;">
+						<table class="table table-bordered " id="dynamic_field2">
 							<thead>
 								<tr>
-									<th style="width: 200px;">Current Position</th>
-									<th style="width: 100px;">Date</th>
-									<th style="width: 100px;">Fee (%)</th>
-									<th style="width: 200px;">Secrtry</th>
+									<th>Current Position</th>
+									<th>Date</th>
+									<th>Secrtry</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -223,9 +233,6 @@
 												<input type="date" class="form-control" name="date[]" placeholder="" value="<?= $row->date ?>" />
 											</td>
 											<td>
-												<input type="number" class="form-control" name="fee[]" placeholder="" value="<?= $row->fee ?>" />
-											</td>
-											<td>
 												<select name="secretary_id[]" class="form-control">
 													<option style="color: black;" value="">-- Pilih -- </option>
 													<?php foreach ($secretary as $key => $rows) { ?>
@@ -246,8 +253,21 @@
 						</table>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-				<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+				<?php if ($button == 'Create') { ?>
+					<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
+				<?php } else { ?>
+					<?php $query = $this->db->query("SELECT * FROM official_receipt where file_id='$file_id'");
+					$cek = $query->num_rows(); ?>
+					<?php if ($cek > 0) { ?>
+						<button type="submit" class="btn btn-danger" disabled><i class="fas fa-save"></i> <?php echo $button ?></button>
+						<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+						<p>*Contact super admin to edit data</p>
+					<?php } else { ?>
+						<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
+						<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+					<?php } ?>
+				<?php } ?>
+
 			</div>
 		</div>
 	</form>
@@ -269,7 +289,7 @@
 		$('#add_berkas').click(function() {
 			i++;
 			$('#dynamic_field').append('<tr id="row' + i +
-				'"><td><select required name="insurer_id[]" class="form-control theSelect" style="width: 100%;"><option value=""  style="color:black">-- Pilih -- </option><?php foreach ($insurer as $key => $data) { ?><option  style="color:black" value="<?php echo $data->insurer_id ?>"><?php echo $data->insurer_code ?> - <?php echo $data->insurer_name ?></option><?php } ?></select></td><td style="width: 45%;"><select required name="type_insurer_id[]" class="form-control "  style="width: 100%;"><option value="" style="color:black">-- Pilih --</option><?php foreach ($type_insurer as $key => $rows) { ?><option style="color: black;" value="<?php echo $rows->type_insurer_id ?>"> <?php echo $rows->type_insurer_name ?></option><?php } ?></select></td><td><button type="button" name="remove" id="' +
+				'"><td><select required name="insurer_id[]" class="form-control theSelect" style="width: 100%;"><option value=""  style="color:black">-- Pilih -- </option><?php foreach ($insurer as $key => $data) { ?><option  style="color:black" value="<?php echo $data->insurer_id ?>"><?php echo $data->insurer_code ?> - <?php echo $data->insurer_name ?></option><?php } ?></select></td><td style="width: 45%;"><select required name="type_insurer_id[]" class="form-control "  style="width: 100%;"><option value="" style="color:black">-- Pilih --</option><?php foreach ($type_insurer as $key => $rows) { ?><option style="color: black;" value="<?php echo $rows->type_insurer_id ?>"> <?php echo $rows->type_insurer_name ?></option><?php } ?></select></td><td><input required style="width: 70px;" type="number" name="fee[]" placeholder="" class="form-control " /></td><td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
 		});
 
@@ -293,7 +313,7 @@
 		$('#add_berkas2').click(function() {
 			i++;
 			$('#dynamic_field2').append('<tr id="row2' + i +
-				'"><td><select required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input required type="date" name="date[]" placeholder="" class="form-control " /></td><td><input type="number" name="fee[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_code ?> - <?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
+				'"><td><select required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input required type="date" name="date[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_code ?> - <?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove2"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
 		});
 
@@ -309,4 +329,29 @@
 		});
 
 	});
+</script>
+
+<script type="text/javascript">
+	var rupiah = document.getElementById('rupiah');
+	rupiah.addEventListener('keyup', function(e) {
+		rupiah.value = formatRupiah(this.value, 'Rp. ');
+		$('#fee_all').val(rupiah.value.replace(/\./g, ''))
+	});
+
+	function formatRupiah(angka, prefix) {
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split = number_string.split(','),
+			sisa = split[0].length % 3,
+			rupiah = split[0].substr(0, sisa),
+			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		// tambahkan titik jika yang di input sudah menjadi angka ribuan
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+	}
 </script>

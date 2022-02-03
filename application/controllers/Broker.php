@@ -143,7 +143,12 @@ class Broker extends CI_Controller
 
 		if ($row) {
 			$this->Broker_model->delete(decrypt_url($id));
-			$this->session->set_flashdata('message', 'Delete Record Success');
+			$error = $this->db->error();
+			if ($error['code'] != 0) {
+				$this->session->set_flashdata('error', 'Tidak dapat dihapus data sudah berrelasi');
+			} else {
+				$this->session->set_flashdata('message', 'Delete Record Success');
+			}
 			redirect(site_url('broker'));
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');

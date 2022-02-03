@@ -29,6 +29,9 @@ class Setting_app extends CI_Controller
 				'alamat' => set_value('alamat', $row->alamat),
 				'website' => set_value('website', $row->website),
 				'photo' => set_value('photo', $row->photo),
+				'telpon' => set_value('telpon', $row->telpon),
+				'fax' => set_value('fax', $row->fax),
+				'email' => set_value('email', $row->email),
 			);
 			$this->template->load('template', 'setting_app/setting_app_form', $data);
 		} else {
@@ -68,6 +71,9 @@ class Setting_app extends CI_Controller
 				'nama_perusahaan' => $this->input->post('nama_perusahaan', TRUE),
 				'alamat' => $this->input->post('alamat', TRUE),
 				'website' => $this->input->post('website', TRUE),
+				'telpon' => $this->input->post('telpon', TRUE),
+				'fax' => $this->input->post('fax', TRUE),
+				'email' => $this->input->post('email', TRUE),
 				'photo' => $photo,
 			);
 
@@ -84,6 +90,9 @@ class Setting_app extends CI_Controller
 		$this->form_validation->set_rules('nama_perusahaan', 'nama perusahaan', 'trim|required');
 		$this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
 		$this->form_validation->set_rules('website', 'website', 'trim|required');
+		$this->form_validation->set_rules('telpon', 'Telpon', 'trim|required');
+		$this->form_validation->set_rules('fax', 'Fax', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
 		$this->form_validation->set_rules('photo', 'photo', 'trim');
 
 		$this->form_validation->set_rules('app_setting_id', 'app_setting_id', 'trim');

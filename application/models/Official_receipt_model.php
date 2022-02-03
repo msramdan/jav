@@ -18,13 +18,20 @@ class Official_receipt_model extends CI_Model
 	// get all
 	function get_all()
 	{
+		$this->db->join('insurer', 'insurer.insurer_id = official_receipt.insurer_id', 'left');
+		$this->db->join('currency', 'currency.currency_id = official_receipt.currency_id', 'left');
+		$this->db->join('file', 'file.file_id = official_receipt.file_id', 'left');
 		$this->db->order_by($this->id, $this->order);
 		return $this->db->get($this->table)->result();
 	}
+	
 
 	// get data by id
 	function get_by_id($id)
 	{
+		$this->db->join('insurer', 'insurer.insurer_id = official_receipt.insurer_id', 'left');
+		$this->db->join('currency', 'currency.currency_id = official_receipt.currency_id', 'left');
+		$this->db->join('file', 'file.file_id = official_receipt.file_id', 'left');
 		$this->db->where($this->id, $id);
 		return $this->db->get($this->table)->row();
 	}

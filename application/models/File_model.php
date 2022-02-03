@@ -33,11 +33,14 @@ class File_model extends CI_Model
 		}
 		if ($status != null) {
 			if ($status == 'Outstanding') {
+				$list=['0'];
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Outstanding'");
 				foreach ($cek->result() as $row) {
 					$list[] = $row->remark_id;
 				}
+
 				$this->db->where_in('remark_id', $list);
+				
 			} else if ($status == 'Receiving') {
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
 				foreach ($cek->result() as $row) {
@@ -169,6 +172,6 @@ class File_model extends CI_Model
 			$kd = "001";
 		}
 		date_default_timezone_set('Asia/Jakarta');
-		return date('Ym-') . $kd;
+		return date('Ym') . $kd;
 	}
 }

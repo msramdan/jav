@@ -30,6 +30,18 @@
 								<td> <textarea class="form-control" rows="3" name="alamat" id="alamat" placeholder="Alamat"><?php echo $alamat; ?></textarea></td>
 							</tr>
 							<tr>
+								<td >Telpon <?php echo form_error('telpon') ?></td>
+								<td><input type="text" class="form-control" name="telpon" id="telpon" placeholder="Telpon" value="<?php echo $telpon; ?>" /></td>
+							</tr>
+							<tr>
+								<td >Fax <?php echo form_error('fax') ?></td>
+								<td><input type="text" class="form-control" name="fax" id="fax" placeholder="Fax" value="<?php echo $fax; ?>" /></td>
+							</tr>
+							<tr>
+								<td >Email <?php echo form_error('email') ?></td>
+								<td><input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email; ?>" /></td>
+							</tr>
+							<tr>
 								<td >Website <?php echo form_error('website') ?></td>
 								<td><input type="text" class="form-control" name="website" id="website" placeholder="Website" value="<?php echo $website; ?>" /></td>
 							</tr>

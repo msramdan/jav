@@ -49,13 +49,11 @@ class File extends CI_Controller
 			} else {
 				$insurer_id = '';
 			}
-			if($insurer_id ==''|| $insurer_id ==null ){
+			if ($insurer_id == '' || $insurer_id == null) {
 				$file = $this->File_model->get_all($start_date, $end_date, $status, $insurer_id);
-			}else{
+			} else {
 				$file = $this->File_model->get_all_insurer($start_date, $end_date, $status, $insurer_id);
 			}
-			
-			
 		} else {
 			if (isset($_GET['start_date'])) {
 				$start_date = $_GET['start_date'];
@@ -82,7 +80,7 @@ class File extends CI_Controller
 			}
 			$file = $this->File_model->get_all($start_date, $end_date, $status, $insurer_id);
 		}
-		
+
 		$data = array(
 			'sett_apps' => $this->Setting_app_model->get_by_id(1),
 			'file_data' => $file,
@@ -142,6 +140,7 @@ class File extends CI_Controller
 			'date_of_receive' => set_value('date_of_receive'),
 			'adjuster_id' => set_value('adjuster_id'),
 			'trade_id' => set_value('trade_id'),
+			'fee_all' => set_value('fee_all'),
 			'type_of_loss_id' => set_value('type_of_loss_id'),
 			'detail_dol' => set_value('detail_dol'),
 			'date_of_loss' => set_value('date_of_loss'),
@@ -188,6 +187,7 @@ class File extends CI_Controller
 				'insured' => $this->input->post('insured', TRUE),
 				'broker_id' => $this->input->post('broker_id', TRUE),
 				'user_id' => $this->input->post('user_id', TRUE),
+				'fee_all' => $this->input->post('fee_all', TRUE),
 				'remark_id' => $last_remark_id,
 			);
 			$this->File_model->insert($data);
@@ -196,9 +196,11 @@ class File extends CI_Controller
 			$insurer_id       		= $_POST['insurer_id'];
 			if ($insurer_id) {
 				$type_insurer_id       	  = $_POST['type_insurer_id'];
+				$fee       	  = $_POST['fee'];
 				$jumlah_data = count($insurer_id);
 				for ($i = 0; $i < $jumlah_data; $i++) {
 					$detail_insurer['file_id'] = $file_id;
+					$detail_insurer['fee'] = $fee[$i];
 					$detail_insurer['insurer_id'] = $insurer_id[$i];
 					$detail_insurer['type_insurer_id'] = $type_insurer_id[$i];
 					$this->db->insert('detail_insurer', $detail_insurer);
@@ -209,13 +211,11 @@ class File extends CI_Controller
 				//insert yang detail remark baru
 				$secretary_id    = $_POST['secretary_id'];
 				$date       	  = $_POST['date'];
-				$fee       	  = $_POST['fee'];
 				$jumlah_data2 = count($remark_id);
 				for ($i = 0; $i < $jumlah_data2; $i++) {
 					$remark['file_id'] = $file_id;
 					$remark['remark_id'] = $remark_id[$i];
 					$remark['secretary_id'] = $secretary_id[$i];
-					$remark['fee'] = $fee[$i];
 					$remark['date'] = $date[$i];
 					$this->db->insert('detail_remark', $remark);
 				}
@@ -258,6 +258,7 @@ class File extends CI_Controller
 				'insured' => set_value('insured', $row->insured),
 				'broker_id' => set_value('broker_id', $row->broker_id),
 				'user_id' => set_value('user_id', $row->user_id),
+				'fee_all' => set_value('fee_all', $row->fee_all),
 			);
 			$this->template->load('template', 'file/file_form', $data);
 		} else {
@@ -280,35 +281,46 @@ class File extends CI_Controller
 			$this->db->delete('detail_insurer');
 			//insert yang detail insurer baru
 			$insurer_id       = $_POST['insurer_id'];
-			$type_insurer_id       	  = $_POST['type_insurer_id'];
-			$jumlah_data = count($insurer_id);
-			for ($i = 0; $i < $jumlah_data; $i++) {
-				$data['file_id'] = $this->input->post('file_id', TRUE);
-				$data['insurer_id'] = $insurer_id[$i];
-				$data['type_insurer_id'] = $type_insurer_id[$i];
-				$this->db->insert('detail_insurer', $data);
+			if ($insurer_id) {
+				$type_insurer_id       	  = $_POST['type_insurer_id'];
+				$fee       	  = $_POST['fee'];
+				$jumlah_data = count($insurer_id);
+				for ($i = 0; $i < $jumlah_data; $i++) {
+					$data['file_id'] = $this->input->post('file_id', TRUE);
+					$data['insurer_id'] = $insurer_id[$i];
+					$data['fee'] = $fee[$i];
+					$data['type_insurer_id'] = $type_insurer_id[$i];
+					$this->db->insert('detail_insurer', $data);
+				}
 			}
-
 			// delete detail remark
 			$this->db->where('file_id', $this->input->post('file_id', TRUE));
 			$this->db->delete('detail_remark');
 			//insert yang detail remark baru
 			$data_remark = [];
 			$remark_id       = $_POST['remark_id'];
-			$secretary_id    = $_POST['secretary_id'];
-			$date       	  = $_POST['date'];
-			$fee       	  = $_POST['fee'];
-			$jumlah_data2 = count($remark_id);
-			for ($i = 0; $i < $jumlah_data2; $i++) {
-				$remark['file_id'] = $this->input->post('file_id', TRUE);
-				$remark['remark_id'] = $remark_id[$i];
-				$remark['secretary_id'] = $secretary_id[$i];
-				$remark['fee'] = $fee[$i];
-				$remark['date'] = $date[$i];
-				array_push($data_remark, $remark_id[$i]);
-				$this->db->insert('detail_remark', $remark);
+			if ($remark_id) {
+				//insert yang detail remark baru
+				$remark_id       = $_POST['remark_id'];
+				$secretary_id    = $_POST['secretary_id'];
+				$date       	  = $_POST['date'];
+				$jumlah_data2 = count($remark_id);
+				for ($i = 0; $i < $jumlah_data2; $i++) {
+					$remark['file_id'] = $this->input->post('file_id', TRUE);
+					$remark['remark_id'] = $remark_id[$i];
+					$remark['secretary_id'] = $secretary_id[$i];
+					$remark['date'] = $date[$i];
+					array_push($data_remark, $remark_id[$i]);
+					$this->db->insert('detail_remark', $remark);
+				}
+				$last_remark_id = end($data_remark);
 			}
-			$last_remark_id = end($data_remark);
+
+
+
+
+
+
 			$file_data = array(
 				'ref_no' => $this->input->post('ref_no', TRUE),
 				'date_of_receive' => $this->input->post('date_of_receive', TRUE),
@@ -324,6 +336,7 @@ class File extends CI_Controller
 				'insured' => $this->input->post('insured', TRUE),
 				'broker_id' => $this->input->post('broker_id', TRUE),
 				'user_id' => $this->input->post('user_id', TRUE),
+				'fee_all' => $this->input->post('fee_all', TRUE),
 				'remark_id' => $last_remark_id,
 			);
 			$this->File_model->update($this->input->post('file_id', TRUE), $file_data);
@@ -336,10 +349,14 @@ class File extends CI_Controller
 	{
 		is_allowed($this->uri->segment(1), 'delete');
 		$row = $this->File_model->get_by_id(decrypt_url($id));
-
 		if ($row) {
 			$this->File_model->delete(decrypt_url($id));
-			$this->session->set_flashdata('message', 'Delete Record Success');
+			$error = $this->db->error();
+			if ($error['code'] != 0) {
+				$this->session->set_flashdata('error', 'Tidak dapat dihapus data sudah berrelasi');
+			} else {
+				$this->session->set_flashdata('message', 'Delete Record Success');
+			}
 			redirect(site_url('file'));
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
@@ -363,6 +380,7 @@ class File extends CI_Controller
 		$this->form_validation->set_rules('insured', 'insured', 'trim|required');
 		$this->form_validation->set_rules('broker_id', 'broker id', 'trim|required');
 		$this->form_validation->set_rules('user_id', 'user id', 'trim|required');
+		$this->form_validation->set_rules('fee_all', 'Total Fee', 'trim|required');
 
 		$this->form_validation->set_rules('file_id', 'file_id', 'trim');
 		$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
