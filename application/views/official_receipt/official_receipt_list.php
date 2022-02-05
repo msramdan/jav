@@ -47,7 +47,11 @@
 												<td><?php echo $official_receipt->or_date ?></td>
 												<td><?php echo $official_receipt->insurer_name ?></td>
 												<td><?php echo $official_receipt->currency_code ?></td>
-												<td><?php echo rupiah($official_receipt->total_fee + $official_receipt->expense - $official_receipt->discount) ?></td>
+												<?php if ($official_receipt->vat == 'Before Expense') { ?>
+													<td><?= rupiah((($official_receipt->total_fee + $official_receipt->expense) + ($official_receipt->total_fee) * 10 / 100) - $official_receipt->discount ) ?></td>
+												<?php } else if ($official_receipt->vat == 'After Expense') { ?>
+													<td><?= rupiah((($official_receipt->total_fee + $official_receipt->expense) + ($official_receipt->total_fee + $official_receipt->expense) * 10 / 100) - $official_receipt->discount ) ?></td>
+												<?php } ?>
 												<td><?php if ($official_receipt->status == 'Paid') { ?>
 														<div class="d-grid gap-2">
 															<button class="btn btn-success btn-sm" type="button"><i class="fa fa-check"></i> Paid </button>
@@ -73,12 +77,12 @@
 													echo '  ';
 													?>
 
-													<?php if($official_receipt->status=='Unpaid'){ ?>
-														<a href="<?= base_url('official_receipt/delete/' .encrypt_url($official_receipt->or_id)) ?>" class="btn btn-danger btn-sm delete_data" delete=""><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
-													<?php }else{ ?>
+													<?php if ($official_receipt->status == 'Unpaid') { ?>
+														<a href="<?= base_url('official_receipt/delete/' . encrypt_url($official_receipt->or_id)) ?>" class="btn btn-danger btn-sm delete_data" delete=""><i class="fas fa-trash-alt" aria-hidden="true"></i></a>
+													<?php } else { ?>
 														<button href="" class="btn btn-danger btn-sm delete_data" delete="" disabled><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
 													<?php } ?>
-													
+
 												</td>
 											</tr>
 										<?php } ?>

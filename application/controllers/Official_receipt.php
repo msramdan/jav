@@ -113,6 +113,13 @@ class Official_receipt extends CI_Controller
 			$detail_or = $this->db->query("SELECT * from official_receipt where file_id='$row->file_id'")->result();
 			$insurer_data = $this->db->query("SELECT * from detail_insurer join insurer on insurer.insurer_id=detail_insurer.insurer_id
 			join type_insurer on type_insurer.type_insurer_id=detail_insurer.type_insurer_id where file_id='$row->file_id'")->result();
+
+			if ($row->vat == 'Before Expense') {
+				$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee) * 10 / 100) - $row->discount );
+			} else if ($row->vat == 'After Expense') {
+				$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee + $row->expense) * 10 / 100) - $row->discount);
+			}
+	
 			$data = array(
 				'button' => 'Update',
 				'currency_data' => $this->Currency_model->get_all(),
@@ -140,7 +147,7 @@ class Official_receipt extends CI_Controller
 				'rate' => set_value('rate', $row->rate),
 				'vat' => set_value('vat', $row->vat),
 				'percentage' => set_value('percentage', $row->percentage),
-				'grand_total' => set_value('grand_total', $row->total_fee + $row->expense - $row->discount),
+				'grand_total' => set_value('grand_total', $hasil),
 
 			);
 			$this->template->load('template', 'official_receipt/official_receipt_update', $data);
@@ -321,7 +328,35 @@ class Official_receipt extends CI_Controller
 	public function print_or($id)
 	{
 		$this->load->library('dompdf_gen');
+		$row = $this->Official_receipt_model->get_by_id(decrypt_url($id));
+		if ($row->vat == 'Before Expense') {
+			$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee) * 10 / 100) - $row->discount );
+		} else if ($row->vat == 'After Expense') {
+			$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee + $row->expense) * 10 / 100) - $row->discount);
+		}
+
 		$data = array(
+			'or_id' => $row->or_id,
+			'ref_no' => $row->ref_no,
+			'hasil' => $hasil,
+			'or_no' => $row->or_no,
+			'file_id' => $row->file_id,
+			'or_date' => $row->or_date,
+			'percentage' => $row->percentage,
+			'insurer_name' => $row->insurer_name,
+			'address' => $row->address,
+			'insurer_ref_no' => $row->insurer_ref_no,
+			'insured' => $row->insured,
+			'date_of_loss' => $row->date_of_loss,
+			'policy_number' => $row->policy_number,
+			'fee_all' => $row->fee_all,
+			'currency_code' => $row->currency_code,
+			'says' => $row->says,
+			'total_fee' => $row->total_fee,
+			'vat' => $row->vat,
+			'expense' => $row->expense,
+			'description' => $row->description,
+			'situation_of_loss' => $row->situation_of_loss,
 			'sett_apps' => $this->Setting_app_model->get_by_id(1),
 		);
 		$this->load->view('official_receipt/print_or', $data);
@@ -338,7 +373,29 @@ class Official_receipt extends CI_Controller
 	public function print_breakdown($id)
 	{
 		$this->load->library('dompdf_gen');
+		$row = $this->Official_receipt_model->get_by_id(decrypt_url($id));
 		$data = array(
+			'or_id' => $row->or_id,
+			'ref_no' => $row->ref_no,
+			'or_no' => $row->or_no,
+			'file_id' => $row->file_id,
+			'or_date' => $row->or_date,
+			'percentage' => $row->percentage,
+			'insurer_name' => $row->insurer_name,
+			'address' => $row->address,
+			'insurer_ref_no' => $row->insurer_ref_no,
+			'insured' => $row->insured,
+			'date_of_loss' => $row->date_of_loss,
+			'policy_number' => $row->policy_number,
+			'fee_all' => $row->fee_all,
+			'currency_code' => $row->currency_code,
+			'says' => $row->says,
+			'total_fee' => $row->total_fee,
+			'vat' => $row->vat,
+			'expense' => $row->expense,
+			'discount' => $row->discount,
+			'description' => $row->description,
+			'situation_of_loss' => $row->situation_of_loss,
 			'sett_apps' => $this->Setting_app_model->get_by_id(1),
 		);
 		$this->load->view('official_receipt/print_breakdown', $data);
@@ -349,13 +406,36 @@ class Official_receipt extends CI_Controller
 
 		$this->dompdf->load_html($html);
 		$this->dompdf->render();
-		$this->dompdf->stream("OR.pdf", array('Attachment' => 0));
+		$this->dompdf->stream("Breakdown.pdf", array('Attachment' => 0));
 	}
 
 	public function print_invoice($id)
 	{
 		$this->load->library('dompdf_gen');
+		$row = $this->Official_receipt_model->get_by_id(decrypt_url($id));
 		$data = array(
+			'or_id' => $row->or_id,
+			'ref_no' => $row->ref_no,
+			'or_no' => $row->or_no,
+			'file_id' => $row->file_id,
+			'or_date' => $row->or_date,
+			'percentage' => $row->percentage,
+			'insurer_name' => $row->insurer_name,
+			'address' => $row->address,
+			'insurer_ref_no' => $row->insurer_ref_no,
+			'insured' => $row->insured,
+			'date_of_loss' => $row->date_of_loss,
+			'policy_number' => $row->policy_number,
+			'fee_all' => $row->fee_all,
+			'currency_code' => $row->currency_code,
+			'invoice_no' => $row->invoice_no,
+			'says' => $row->says,
+			'total_fee' => $row->total_fee,
+			'discount' => $row->discount,
+			'vat' => $row->vat,
+			'expense' => $row->expense,
+			'description' => $row->description,
+			'situation_of_loss' => $row->situation_of_loss,
 			'sett_apps' => $this->Setting_app_model->get_by_id(1),
 		);
 		$this->load->view('official_receipt/print_invoice', $data);
@@ -366,6 +446,6 @@ class Official_receipt extends CI_Controller
 
 		$this->dompdf->load_html($html);
 		$this->dompdf->render();
-		$this->dompdf->stream("OR.pdf", array('Attachment' => 0));
+		$this->dompdf->stream("Invoice.pdf", array('Attachment' => 0));
 	}
 }

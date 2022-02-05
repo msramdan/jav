@@ -255,6 +255,7 @@
 				</div>
 				<?php if ($button == 'Create') { ?>
 					<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
+					<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
 				<?php } else { ?>
 					<?php $query = $this->db->query("SELECT * FROM official_receipt where file_id='$file_id'");
 					$cek = $query->num_rows(); ?>

@@ -135,7 +135,8 @@
 
 													<div class="input-group mb-3">
 														<div style="width: 25%;" class="input-group-text"><span id="text_fee"></span></div>
-														<input readonly class="form-control" type="number" id="fee" name="fee" placeholder="Fee">
+														<input readonly class="form-control" type="text" id="fee_text" name="fee_text" placeholder="Fee">
+														<input readonly class="form-control" type="hidden" id="fee" name="fee" placeholder="Fee">
 													</div>
 												</div>
 											</div>
@@ -145,7 +146,8 @@
 
 													<div class="input-group mb-3">
 														<div style="width: 25%;" class="input-group-text"><span id="text_expense"></span></div>
-														<input value="0" min="0" class="form-control" type="number" id="expense" name="expense" placeholder="Expense">
+														<input value="0" min="0" class="form-control" type="text" id="expense_text" name="expense_text" placeholder="Expense">
+														<input value="0" min="0" class="form-control" type="hidden" id="expense" name="expense" placeholder="Expense">
 													</div>
 												</div>
 												<div class="col-md-6 mb-1">
@@ -153,7 +155,8 @@
 
 													<div class="input-group mb-3">
 														<div style="width: 25%;" class="input-group-text"><span id="text_discount"></span></div>
-														<input value="0" min="0" class="form-control" type="number" id="discount" name="discount" placeholder="Discount">
+														<input value="0" min="0" class="form-control" type="text" id="discount_text" name="discount_text" placeholder="Discount">
+														<input value="0" min="0" class="form-control" type="hidden" id="discount" name="discount" placeholder="Discount">
 													</div>
 												</div>
 											</div>
@@ -163,7 +166,8 @@
 
 													<div class="input-group mb-3">
 														<div style="width: 13%;" class="input-group-text"><span id="text_grand_total"></span></div>
-														<input readonly class="form-control" type="number" id="grand_total" name="grand_total" placeholder="Grand Total">
+														<input readonly class="form-control" type="text" id="grand_total_text" name="grand_total_text" placeholder="Grand Total">
+														<input readonly class="form-control" type="hidden" id="grand_total" name="grand_total" placeholder="Grand Total">
 													</div>
 												</div>
 											</div>
@@ -173,10 +177,10 @@
 
 											<div class="row form-group">
 												<div class="col-md-12 mb-4">
-													<label class="form-label" for="grand_total">VAT Options</label>
+													<label class="form-label" for="vat1">VAT Options</label>
 													<div class="col-md-12 pt-2">
 														<div class="form-check form-check-inline">
-															<input class="form-check-input message_pri" type="radio" id="vat1" name="vat" value="Before Expense"  checked>
+															<input class="form-check-input message_pri" type="radio" id="vat1" name="vat" value="Before Expense" checked>
 															<label class="form-check-label" for="vat">VAT Before Expense</label>
 														</div>
 														<div class="form-check form-check-inline">
@@ -194,8 +198,8 @@
 											</div>
 											<div class="row form-group">
 												<div class="col-md-12 mb-2">
-												<label class="form-label" for="status">Status Payment</label>
-												<input readonly class="form-control" type="" id="" value="Unpaid" name="" placeholder="">
+													<label class="form-label" for="status">Status Payment</label>
+													<input readonly class="form-control" type="" id="" value="Unpaid" name="" placeholder="">
 												</div>
 											</div>
 										</div>
@@ -332,6 +336,8 @@
 		let percentage = $('#percentage').val()
 		let discount = $('#discount').val()
 		let expense = $('#expense').val()
+		var vat = $(".message_pri:checked").val();
+		// console.log(vat)
 		if (!discount) {
 			discount = 0
 		}
@@ -341,18 +347,30 @@
 
 		let fee = (percentage / 100 * total_fee)
 
-		let grand_total = parseInt(fee) + parseInt(expense) - parseInt(discount)
+		if (vat == 'Before Expense') {
+			vat = parseInt(fee) * 10 / 100
+		} else {
+			vat = (parseInt(fee) + parseInt(expense)) * 10 / 100
+		}
+
+		let grand_total = parseInt(fee) + parseInt(expense) + parseInt(vat) - parseInt(discount)
 		if (percentage) {
 			$('#fee').val(fee)
+			$('#fee_text').val(convertToRupiah(fee))
 			$('#grand_total').val(grand_total)
+			$('#grand_total_text').val(convertToRupiah(grand_total))
 		} else {
 			$('#fee').val('')
 			$('#grand_total').val('')
 		}
 	}
-	$(document).on('keyup mouseup', '#discount, #expense', function() {
+	$(document).on('keyup mouseup', '#discount_text, #expense_text', function() {
 		calculate()
 	})
+
+	$(document).on('change', '.message_pri', function() {
+		calculate()
+	});
 </script>
 
 <script>
@@ -409,7 +427,7 @@
 					success: function(result) {
 						if (result.success == true) {
 							alert('Successful transaction');
-							window.location='<?= base_url('official_receipt') ?>'
+							window.location = '<?= base_url('official_receipt') ?>'
 						} else {
 							alert('Failed to make a transaction');
 						}
@@ -422,4 +440,46 @@
 
 
 	});
+</script>
+
+<script type="text/javascript">
+	/* Tanpa Rupiah */
+	var tanpa_rupiah_expense = document.getElementById('expense_text');
+	tanpa_rupiah_expense.addEventListener('keyup', function(e) {
+		tanpa_rupiah_expense.value = formatRupiah(this.value);
+		$('#expense').val(tanpa_rupiah_expense.value.replace(/\./g, ''))
+	});
+
+	var dicount_tanpa_rupiah = document.getElementById('discount_text');
+	dicount_tanpa_rupiah.addEventListener('keyup', function(e) {
+		dicount_tanpa_rupiah.value = formatRupiah(this.value);
+		$('#discount').val(dicount_tanpa_rupiah.value.replace(/\./g, ''))
+	});
+
+	/* Fungsi */
+
+	function formatRupiah(angka, prefix) {
+		var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split = number_string.split(','),
+			sisa = split[0].length % 3,
+			rupiah = split[0].substr(0, sisa),
+			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+		// tambahkan titik jika yang di input sudah menjadi angka ribuan
+		if (ribuan) {
+			separator = sisa ? '.' : '';
+			rupiah += separator + ribuan.join('.');
+		}
+
+		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+		return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+	}
+
+	function convertToRupiah(angka) {
+		var rupiah = '';
+		var angkarev = angka.toString().split('').reverse().join('');
+		for (var i = 0; i < angkarev.length; i++)
+			if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+		return rupiah.split('', rupiah.length - 1).reverse().join('');
+	}
 </script>

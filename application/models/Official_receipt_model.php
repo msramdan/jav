@@ -24,6 +24,35 @@ class Official_receipt_model extends CI_Model
 		$this->db->order_by($this->id, $this->order);
 		return $this->db->get($this->table)->result();
 	}
+
+	function paid($start_date=null,$end_date=null)
+	{
+		if ($start_date != null) {
+			$this->db->where('create_date >=', $start_date);
+		}
+		
+		if ($end_date != null) {
+			$this->db->where('create_date <=', $end_date);
+		}
+		$this->db->where('status', 'Paid');
+		$query = $this->db->get('official_receipt');
+		return $query->num_rows();
+	}
+
+	function unpaid($start_date=null,$end_date=null)
+	{
+		if ($start_date != null) {
+			$this->db->where('create_date >=', $start_date);
+		}
+		
+		if ($end_date != null) {
+			$this->db->where('create_date <=', $end_date);
+		}
+
+		$this->db->where('status', 'Unpaid');
+		$query = $this->db->get('official_receipt');
+		return $query->num_rows();
+	}
 	
 
 	// get data by id

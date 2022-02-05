@@ -16,6 +16,44 @@ class File_model extends CI_Model
 		parent::__construct();
 	}
 
+	function receiving($start_date = null, $end_date = null)
+	{
+		if ($start_date != null) {
+			$this->db->where('create_date >=', $start_date);
+		}
+
+		if ($end_date != null) {
+			$this->db->where('create_date <=', $end_date);
+		}
+		$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
+		foreach ($cek->result() as $row) {
+			$list[] = $row->remark_id;
+		}
+		$this->db->where_in('remark_id', $list);
+		$query = $this->db->get('file');
+		return $query->num_rows();
+	}
+
+	function outstanding($start_date = null, $end_date = null)
+	{
+		if ($start_date != null) {
+			$this->db->where('create_date >=', $start_date);
+		}
+
+		if ($end_date != null) {
+			$this->db->where('create_date <=', $end_date);
+		}
+		$list = ['0'];
+		$cek = $this->db->query("SELECT * FROM remark where status_case='Outstanding'");
+		foreach ($cek->result() as $row) {
+			$list[] = $row->remark_id;
+		}
+
+		$this->db->where_in('remark_id', $list);
+		$query = $this->db->get('file');
+		return $query->num_rows();
+	}
+
 	// get all
 	function get_all($start_date = null, $end_date = null, $status = null, $insurer_id = null)
 	{
@@ -33,14 +71,13 @@ class File_model extends CI_Model
 		}
 		if ($status != null) {
 			if ($status == 'Outstanding') {
-				$list=['0'];
+				$list = ['0'];
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Outstanding'");
 				foreach ($cek->result() as $row) {
 					$list[] = $row->remark_id;
 				}
 
 				$this->db->where_in('remark_id', $list);
-				
 			} else if ($status == 'Receiving') {
 				$cek = $this->db->query("SELECT * FROM remark where status_case='Receiving'");
 				foreach ($cek->result() as $row) {

@@ -10,7 +10,7 @@
 					<h4 class="panel-title">FILTER</h4>
 				</div>
 				<div class="panel-body">
-					<form accept="<?= base_url() ?>file" method="GET">
+					<form action="<?= base_url() ?>file" method="GET">
 						<div class="form-group" style="margin-bottom: 5px;">
 							<label for="exampleInputEmail1">Start Date</label>
 							<input type="date" <?php if (isset($_GET['start_date'])) { ?> value="<?= $_GET['start_date'] ?>" <?php } ?> name="start_date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
