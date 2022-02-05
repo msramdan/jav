@@ -71,8 +71,6 @@
 													echo '  ';
 													echo anchor(site_url('official_receipt/print_invoice/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-print" aria-hidden="true"></i> 3', 'class="btn btn-white btn-sm " target="_blank"');
 													echo '  ';
-													echo anchor(site_url('official_receipt/read/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
-													echo '  ';
 													echo anchor(site_url('official_receipt/update/' . encrypt_url($official_receipt->or_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 													echo '  ';
 													?>
@@ -96,12 +94,6 @@
 			</div>
 		</div>
 	</div>
-	<?php
-	if (is_allowed_button($this->uri->segment(1), 'read') < 1) { ?>
-		<script>
-			$('.read_data').css('display', 'none')
-		</script>
-	<?php } ?>
 
 	<?php
 	if (is_allowed_button($this->uri->segment(1), 'create') < 1) { ?>

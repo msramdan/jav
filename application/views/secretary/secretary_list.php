@@ -25,8 +25,8 @@
 							<div class="box-body" style="overflow-x: scroll; ">
 								<table id="data-table-default" class="table table-bordered table-hover table-td-valign-middle text-white">
 									<thead>
-										<tr class="table-secondary">
-											<th style="width: 5%;">No</th>
+										<tr>
+											<th>No</th>
 											<th>Secretary Code</th>
 											<th>Secretary Name</th>
 											<th>Secretary Address</th>
@@ -43,8 +43,6 @@
 												<td><?php echo $secretary->secretary_address ?></td>
 												<td style="text-align:center" width="200px">
 													<?php
-													echo anchor(site_url('secretary/read/' . encrypt_url($secretary->secretary_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
-													echo '  ';
 													echo anchor(site_url('secretary/update/' . encrypt_url($secretary->secretary_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 													echo '  ';
 													echo anchor(site_url('secretary/delete/' . encrypt_url($secretary->secretary_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
@@ -62,13 +60,6 @@
 			</div>
 		</div>
 	</div>
-	<?php
-	if (is_allowed_button($this->uri->segment(1), 'read') < 1) { ?>
-		<script>
-			$('.read_data').css('display', 'none')
-		</script>
-	<?php } ?>
-
 	<?php
 	if (is_allowed_button($this->uri->segment(1), 'create') < 1) { ?>
 		<script>

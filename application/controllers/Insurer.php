@@ -144,7 +144,12 @@ class Insurer extends CI_Controller
 
         if ($row) {
             $this->Insurer_model->delete(decrypt_url($id));
-            $this->session->set_flashdata('message', 'Delete Record Success');
+			$error = $this->db->error();
+			if ($error['code'] != 0) {
+				$this->session->set_flashdata('error', 'Tidak dapat dihapus data sudah berrelasi');
+			} else {
+				$this->session->set_flashdata('message', 'Delete Record Success');
+			}
             redirect(site_url('insurer'));
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

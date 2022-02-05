@@ -52,8 +52,6 @@
 												<td><?php echo $user->email ?></td>
 												<td style="text-align:center" width="200px">
 													<?php
-													echo anchor(site_url('user/read/' . $user->user_id), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
-													echo '  ';
 													echo anchor(site_url('user/update/' . $user->user_id), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 													echo '  ';
 													echo anchor(site_url('user/delete/' . $user->user_id), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
@@ -100,13 +98,6 @@
 	})
 </script>
 
-
-<?php
-if (is_allowed_button($this->uri->segment(1), 'read') < 1) { ?>
-	<script type="text/javascript">
-		$('.read_data').css('display', 'none')
-	</script>
-<?php } ?>
 
 <?php
 if (is_allowed_button($this->uri->segment(1), 'create') < 1) { ?>

@@ -41,21 +41,6 @@ function check_access($level_id, $sub_menu_id)
 	}
 }
 
-//acces_read
-function check_access_read($level_id, $menu_id)
-{
-	$ci = get_instance();
-	$ci->db->where('level_id', $level_id);
-	$ci->db->where('sub_menu_id', $menu_id);
-	$result = $ci->db->get('user_access_menu');
-	if ($result->num_rows() > 0) {
-		$row = $result->row();
-		if ($row->read == 1) {
-			return "checked='checked'";
-		}
-	}
-}
-
 //acces_create
 function check_access_create($level_id, $menu_id)
 {

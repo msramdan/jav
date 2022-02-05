@@ -49,8 +49,6 @@
 												<td><?php echo $insurer->npwp ?></td>
 												<td style="text-align:center" width="200px">
 													<?php
-													echo anchor(site_url('insurer/read/' . encrypt_url($insurer->insurer_id)), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
-													echo '  ';
 													echo anchor(site_url('insurer/update/' . encrypt_url($insurer->insurer_id)), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 													echo '  ';
 													echo anchor(site_url('insurer/delete/' . encrypt_url($insurer->insurer_id)), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
@@ -68,12 +66,6 @@
 			</div>
 		</div>
 	</div>
-	<?php
-	if (is_allowed_button($this->uri->segment(1), 'read') < 1) { ?>
-		<script>
-			$('.read_data').css('display', 'none')
-		</script>
-	<?php } ?>
 
 	<?php
 	if (is_allowed_button($this->uri->segment(1), 'create') < 1) { ?>

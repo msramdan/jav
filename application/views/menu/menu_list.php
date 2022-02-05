@@ -42,8 +42,7 @@
 										<td><?php echo $menu->urutan ?></td>
 										<td style="text-align:center">
 											<?php
-											echo anchor(site_url('menu/read/' . $menu->menu_id), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm"');
-											echo '  ';
+
 											echo anchor(site_url('menu/update/' . $menu->menu_id), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm"');
 											echo '  ';
 											echo anchor(site_url('menu/delete/' . $menu->menu_id), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
@@ -104,8 +103,6 @@
 										<td><?php echo $sub_menu->url ?></td>
 										<td style="text-align:center" width="200px">
 											<?php
-											echo anchor(site_url('sub_menu/read/' . $sub_menu->sub_menu_id), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm"');
-											echo '  ';
 											echo anchor(site_url('sub_menu/update/' . $sub_menu->sub_menu_id), '<i class="fas fa-pencil-alt" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm"');
 											echo '  ';
 											echo anchor(site_url('sub_menu/delete/' . $sub_menu->sub_menu_id), '<i class="fas fa-trash-alt" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');

@@ -15,16 +15,6 @@ class Sub_menu extends CI_Controller
 		$this->load->library('form_validation');
 	}
 
-	public function index()
-	{
-		$sub_menu = $this->Sub_menu_model->get_all();
-		$data = array(
-			'sub_menu_data' => $sub_menu,
-			'sett_apps' => $this->Setting_app_model->get_by_id(1),
-		);
-		$this->template->load('template', 'sub_menu/sub_menu_list', $data);
-	}
-
 	public function read($id)
 	{
 		$row = $this->Sub_menu_model->get_by_id($id);

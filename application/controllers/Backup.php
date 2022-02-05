@@ -30,7 +30,7 @@ date_default_timezone_set('Asia/Jakarta');
 			$this->load->dbutil();
 			// Backup your entire database and assign it to a variable
 			$prefs = array(
-		        'tables'        => array('user','level'),   // Array of tables to backup.
+		        'tables'        => array('adjuster','broker','currency','detail_insurer','detail_remark','file','history_login','insurer','level','menu','official_receipt','religion','remark','secretary','setting_app','sub_menu','trade','type_business','type_insurer','type_of_loss','user','user_access_menu'),   // Array of tables to backup.
 		        'ignore'        => array(),                     // List of tables to omit from the backup
 		        'format'        => 'txt',                       // gzip, zip, txt
 		        'filename'      => date('Ymd-h.i').'.sql',              // File name - NEEDED ONLY WITH ZIP FILES

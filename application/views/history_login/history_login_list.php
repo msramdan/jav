@@ -29,7 +29,6 @@
 												<th>Info</th>
 												<th>Tanggal</th>
 												<th>User Agent</th>
-												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody><?php $no = 1;
@@ -41,11 +40,6 @@
 													<td><?php echo $history_login->info ?></td>
 													<td><?php echo $history_login->tanggal ?></td>
 													<td><?php echo $history_login->user_agent ?></td>
-													<td style="text-align:center">
-														<?php
-														echo anchor(site_url('history_login/read/' . $history_login->history_login_id), '<i class="fas fa-eye" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
-														?>
-													</td>
 												</tr>
 											<?php } ?>
 										</tbody>
@@ -60,13 +54,6 @@
 		</div>
 	</div>
 
-
-	<?php
-	if (is_allowed_button($this->uri->segment(1), 'read') < 1) { ?>
-		<script type="text/javascript">
-			$('.read_data').css('display', 'none')
-		</script>
-	<?php } ?>
 
 	<?php
 	if (is_allowed_button($this->uri->segment(1), 'create') < 1) { ?>

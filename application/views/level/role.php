@@ -19,7 +19,6 @@
 							<th width="1%">No</th>
 							<th width="24%">Nama</th>
 							<th width="25%">Access View</th>
-							<th width="10%">Read</th>
 							<th width="10%">Create</th>
 							<th width="10%">Update</th>
 							<th width="10%">Delete</th>
@@ -45,30 +44,6 @@
 										<?php foreach ($subMenu as $sm) : ?>
 											<input class="form-check-input access" type="checkbox" <?= check_access($role['level_id'], $sm['sub_menu_id']); ?> data-level="<?= $role['level_id']; ?>" data-submenu="<?= $sm['sub_menu_id'] ?>">
 											<label style="margin-bottom: 3px" class="" for="customCheck1"><?= $sm['nama_sub_menu'] ?></label><br>
-										<?php endforeach; ?>
-									</div>
-								</td>
-								<!-- Query Untuk Akses Read -->
-								<td>
-									<div class="form-check">
-										<?php
-										$menuId = $value->menu_id;
-										$querySubMenu = "SELECT `sub_menu`.`nama_sub_menu`,`sub_menu`.`sub_menu_id`,`menu`.*
-                                  FROM `sub_menu` JOIN `menu` 
-                                    ON `sub_menu`.`menu_id` = `menu`.`menu_id`
-                                 WHERE `sub_menu`.`menu_id` = $menuId
-                                 ";
-										$subMenu = $this->db->query($querySubMenu)->result_array();
-										?>
-
-										<?php foreach ($subMenu as $sm) :
-											$coba = check_access($role['level_id'], $sm['sub_menu_id']); ?>
-											<?php if ($coba == '') { ?>
-												<input class="form-check-input read-access" type="checkbox" disabled="">
-											<?php } else { ?>
-												<input class="form-check-input read-access" type="checkbox" <?= check_access_read($role['level_id'], $sm['sub_menu_id']); ?> data-level="<?= $role['level_id']; ?>" data-submenu="<?= $sm['sub_menu_id'] ?>">
-											<?php } ?>
-											<label style="margin-bottom: 3px" class="" for="customCheck1">Ya</label><br>
 										<?php endforeach; ?>
 									</div>
 								</td>
