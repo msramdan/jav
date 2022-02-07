@@ -80,7 +80,7 @@ class Official_receipt extends CI_Controller
 		if (isset($_POST['process_simpan'])) {
 			$query = $this->db->query("SELECT * FROM official_receipt where file_id='$file_id'");
 			$cek = $query->num_rows();
-			if($cek < 1){
+			if ($cek < 1) {
 				$file_data = array(
 					'fee_all' => $this->input->post('fee_all'),
 				);
@@ -125,11 +125,11 @@ class Official_receipt extends CI_Controller
 			join type_insurer on type_insurer.type_insurer_id=detail_insurer.type_insurer_id where file_id='$row->file_id'")->result();
 
 			if ($row->vat == 'Before Expense') {
-				$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee) * 10 / 100) - $row->discount );
+				$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee) * 10 / 100) - $row->discount);
 			} else if ($row->vat == 'After Expense') {
 				$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee + $row->expense) * 10 / 100) - $row->discount);
 			}
-	
+
 			$data = array(
 				'button' => 'Update',
 				'currency_data' => $this->Currency_model->get_all(),
@@ -200,9 +200,17 @@ class Official_receipt extends CI_Controller
 	{
 		is_allowed($this->uri->segment(1), 'delete');
 		$row = $this->Official_receipt_model->get_by_id(decrypt_url($id));
-
 		if ($row) {
 			$this->Official_receipt_model->delete(decrypt_url($id));
+
+			$query = $this->db->query("SELECT * FROM official_receipt where file_id='$row->file_id'");
+			$cek = $query->num_rows();
+			if ($cek < 1) {
+				$file_data = array(
+					'fee_all' => 0,
+				);
+				$this->File_model->update($row->file_id, $file_data);
+			}
 			$this->session->set_flashdata('message', 'Delete Record Success');
 			redirect(site_url('official_receipt'));
 		} else {
@@ -340,7 +348,7 @@ class Official_receipt extends CI_Controller
 		$this->load->library('dompdf_gen');
 		$row = $this->Official_receipt_model->get_by_id(decrypt_url($id));
 		if ($row->vat == 'Before Expense') {
-			$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee) * 10 / 100) - $row->discount );
+			$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee) * 10 / 100) - $row->discount);
 		} else if ($row->vat == 'After Expense') {
 			$hasil = ((($row->total_fee + $row->expense) + ($row->total_fee + $row->expense) * 10 / 100) - $row->discount);
 		}

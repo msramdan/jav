@@ -7,8 +7,8 @@ class Remark_model extends CI_Model
 {
 
     public $table = 'remark';
-    public $id = 'remark_id';
-    public $order = 'DESC';
+    public $id = 'remark_code';
+    public $order = 'ASC';
 
     function __construct()
     {
