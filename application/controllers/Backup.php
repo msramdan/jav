@@ -52,7 +52,7 @@ date_default_timezone_set('Asia/Jakarta');
 								'remark',
 								'secretary',
 								'setting_app',
-								'sider',
+								'slider',
 								'sub_menu',
 								'team',
 								'trade',
