@@ -16,6 +16,7 @@ class File extends CI_Controller
 		$this->load->model('Trade_model');
 		$this->load->model('Insurer_model');
 		$this->load->model('File_model');
+		$this->load->model('Currency_model');
 		$this->load->model('Type_of_loss_model');
 		$this->load->model('Broker_model');
 		$this->load->library('form_validation');
@@ -127,6 +128,7 @@ class File extends CI_Controller
 			'type_insurer' => $this->Insurer_model->get_all_type_insurer(),
 			'adjuster' => $this->Adjuster_model->get_all(),
 			'secretary' => $this->Secretary_model->get_all(),
+			'currency' => $this->Currency_model->get_all(),
 			'remark' => $this->Remark_model->get_all(),
 			'insurer' => $this->Insurer_model->get_all(),
 			'trade' => $this->Trade_model->get_all(),
@@ -211,12 +213,20 @@ class File extends CI_Controller
 				//insert yang detail remark baru
 				$secretary_id    = $_POST['secretary_id'];
 				$date       	  = $_POST['date'];
+				$currency_id       	  = $_POST['currency_id'];
+				$reserve       	  = $_POST['reserve'];
+				$claim       	  = $_POST['claim'];
+				$adj       	  = $_POST['adj'];
 				$jumlah_data2 = count($remark_id);
 				for ($i = 0; $i < $jumlah_data2; $i++) {
 					$remark['file_id'] = $file_id;
 					$remark['remark_id'] = $remark_id[$i];
 					$remark['secretary_id'] = $secretary_id[$i];
 					$remark['date'] = $date[$i];
+					$remark['currency_id'] = $currency_id[$i];
+					$remark['reserve'] = $reserve[$i];
+					$remark['claim'] = $claim[$i];
+					$remark['adj'] = $adj[$i];
 					$this->db->insert('detail_remark', $remark);
 				}
 			}
@@ -238,6 +248,7 @@ class File extends CI_Controller
 				'secretary' => $this->Secretary_model->get_all(),
 				'remark' => $this->Remark_model->get_all(),
 				'insurer' => $this->Insurer_model->get_all(),
+				'currency' => $this->Currency_model->get_all(),
 				'trade' => $this->Trade_model->get_all(),
 				'broker' => $this->Broker_model->get_all(),
 				'type_of_loss' => $this->Type_of_loss_model->get_all(),
@@ -304,22 +315,25 @@ class File extends CI_Controller
 				$remark_id       = $_POST['remark_id'];
 				$secretary_id    = $_POST['secretary_id'];
 				$date       	  = $_POST['date'];
+				$currency_id       	  = $_POST['currency_id'];
+				$reserve       	  = $_POST['reserve'];
+				$claim       	  = $_POST['claim'];
+				$adj       	  = $_POST['adj'];
 				$jumlah_data2 = count($remark_id);
 				for ($i = 0; $i < $jumlah_data2; $i++) {
 					$remark['file_id'] = $this->input->post('file_id', TRUE);
 					$remark['remark_id'] = $remark_id[$i];
 					$remark['secretary_id'] = $secretary_id[$i];
 					$remark['date'] = $date[$i];
+					$remark['currency_id'] = $currency_id[$i];
+					$remark['reserve'] = $reserve[$i];
+					$remark['claim'] = $claim[$i];
+					$remark['adj'] = $adj[$i];
 					array_push($data_remark, $remark_id[$i]);
 					$this->db->insert('detail_remark', $remark);
 				}
 				$last_remark_id = end($data_remark);
 			}
-
-
-
-
-
 
 			$file_data = array(
 				'ref_no' => $this->input->post('ref_no', TRUE),
@@ -336,7 +350,6 @@ class File extends CI_Controller
 				'insured' => $this->input->post('insured', TRUE),
 				'broker_id' => $this->input->post('broker_id', TRUE),
 				'user_id' => $this->input->post('user_id', TRUE),
-				'fee_all' => $this->input->post('fee_all', TRUE),
 				'remark_id' => $last_remark_id,
 			);
 			$this->File_model->update($this->input->post('file_id', TRUE), $file_data);
@@ -380,8 +393,6 @@ class File extends CI_Controller
 		$this->form_validation->set_rules('insured', 'insured', 'trim|required');
 		$this->form_validation->set_rules('broker_id', 'broker id', 'trim|required');
 		$this->form_validation->set_rules('user_id', 'user id', 'trim|required');
-		$this->form_validation->set_rules('fee_all', 'Total Fee', 'trim|required');
-
 		$this->form_validation->set_rules('file_id', 'file_id', 'trim');
 		$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
 	}

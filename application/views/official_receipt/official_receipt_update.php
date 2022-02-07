@@ -122,27 +122,38 @@
 									<div class="row mt-4">
 										<div class="col-md-6">
 											<div class="row form-group">
+											<div class="col-md-6 mb-2">
+													<label class="form-label" for="percentage">Total Fee</label>
+													<div class="input-group mb-3">
+														<div style="width: 25%;" class="input-group-text"><span id="text_total_fee"><?= $currency_code ?></span></div>
+														<input readonly class="form-control" value="<?= rupiah($fee_all)  ?>" type="text" id="total_fee_text" name="total_fee_text" placeholder="Total Fee">
+														<input readonly class="form-control" value="<?= $fee_all ?>" type="hidden" id="total_fee" name="total_fee" placeholder="Total Fee">
+													</div>
+												</div>
+
+
 												<div class="col-md-6 mb-2">
 													<label class="form-label" for="percentage">Percentage (%) </label>
-													<input class="form-control" value="<?= $fee_all ?>" type="hidden" id="total_fee" name="fee_all" placeholder="">
+								
 													<div class="input-group mb-3">
-
 														<input readonly class="form-control" type="text" id="percentage" name="percentage" value="<?= $percentage ?>" placeholder="Percentage">
 														<div style="width: 25%;" class="input-group-text"><span id="">%</span></div>
 													</div>
 												</div>
 
-												<div class="col-md-6 mb-2">
-													<label class="form-label" for="fee">Fee</label>
+											</div>
+											<div class="row form-group">
 
+											<div class="col-md-6 mb-1">
+													<label class="form-label" for="fee">Fee</label>
 													<div class="input-group mb-2">
 														<div style="width: 25%;" class="input-group-text"><span id="text_fee"><?= $currency_code ?></span></div>
 														<input readonly class="form-control" type="text" id="fee_text" name="fee_text" placeholder="Fee" value="<?= rupiah($total_fee) ?>">
 														<input readonly class="form-control" type="hidden" id="fee" name="fee" placeholder="Fee" value="<?= $total_fee?>">
 													</div>
 												</div>
-											</div>
-											<div class="row form-group">
+
+
 												<div class="col-md-6 mb-1">
 													<label class="form-label" for="expense">Expense</label>
 
@@ -152,7 +163,13 @@
 														<input min="0" class="form-control" type="hidden" id="expense" name="expense" placeholder="Expense" value="<?= $expense ?>">
 													</div>
 												</div>
-												<div class="col-md-6 mb-1">
+												
+											</div>
+
+											
+											<div class="row form-group">
+
+											<div class="col-md-6 mb-1">
 													<label class="form-label" for="discount">Discount</label>
 
 													<div class="input-group mb-3">
@@ -161,15 +178,11 @@
 														<input min="0" class="form-control" type="hidden" id="discount" name="discount" placeholder="Discount" value="<?= $discount ?>">
 													</div>
 												</div>
-											</div>
-
-											
-											<div class="row form-group">
-												<div class="col-md-12 mb-3">
+												<div class="col-md-6 mb-1">
 													<label class="form-label" for="grand_total">Grand Total</label>
 
 													<div class="input-group mb-3">
-														<div style="width: 13%;" class="input-group-text"><span id="text_grand_total"><?= $currency_code ?></span></div>	
+														<div style="width: 25%;" class="input-group-text"><span id="text_grand_total"><?= $currency_code ?></span></div>	
 														<input readonly class="form-control" type="text" id="grand_total_text" name="grand_total_text" placeholder="Grand Total" value="<?= rupiah($grand_total)  ?>">
 														<input readonly class="form-control" type="hidden" id="grand_total" name="grand_total" placeholder="Grand Total" value="<?= $grand_total ?>">
 													</div>
@@ -216,11 +229,11 @@
 											<div class="form-group">
 												<?php if ($status == 'Paid') { ?>
 													<button id="simpan_data" type="submit" class="btn btn-danger" disabled><i class="fas fa-save"></i> <?php echo $button ?></button>
-													<a href="<?php echo site_url('official_receipt') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+													<a href="<?php echo site_url('official_receipt') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 													<p>*Contact super admin to edit data</p>
 												<?php } else { ?>
 													<button id="simpan_data" type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-													<a href="<?php echo site_url('official_receipt') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+													<a href="<?php echo site_url('official_receipt') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 												<?php } ?>
 
 											</div>
@@ -323,6 +336,8 @@
 				$('#text_discount').html(res)
 				$('#text_fee').html(res)
 				$('#text_grand_total').html(res)
+				$('#text_total_fee').html(res)
+				
 			}
 		});
 	})

@@ -22,7 +22,7 @@
         <tr><td >Secretary Address <?php echo form_error('secretary_address') ?></td><td> <textarea class="form-control" rows="3" name="secretary_address" id="secretary_address" placeholder="Secretary Address"><?php echo $secretary_address; ?></textarea></td></tr>
 	    <tr><td></td><td><input type="hidden" name="secretary_id" value="<?php echo $secretary_id; ?>" /> 
 	    <button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button> 
-	    <a href="<?php echo site_url('secretary') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a></td></tr>
+	    <a href="<?php echo site_url('secretary') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a></td></tr>
 </thead>
 	</table></form>        </div>
 </div>

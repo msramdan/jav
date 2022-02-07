@@ -36,7 +36,7 @@
 								<td></td>
 								<td><input type="hidden" name="currency_id" value="<?php echo $currency_id; ?>" />
 									<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-									<a href="<?php echo site_url('currency') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+									<a href="<?php echo site_url('currency') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 								</td>
 							</tr>
 					</thead>

@@ -31,7 +31,7 @@
 							<td></td>
 							<td><input type="hidden" name="menu_id" value="<?php echo $menu_id; ?>" />
 								<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-								<a href="<?php echo site_url('menu') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+								<a href="<?php echo site_url('menu') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 							</td>
 						</tr>
 					</table>

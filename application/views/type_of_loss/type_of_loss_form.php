@@ -20,7 +20,7 @@
 	    <tr><td >Tol Name <?php echo form_error('tol_name') ?></td><td><input type="text" class="form-control" name="tol_name" id="tol_name" placeholder="Tol Name" value="<?php echo $tol_name; ?>" /></td></tr>
 	    <tr><td></td><td><input type="hidden" name="type_of_loss_id" value="<?php echo $type_of_loss_id; ?>" /> 
 	    <button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button> 
-	    <a href="<?php echo site_url('type_of_loss') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a></td></tr>
+	    <a href="<?php echo site_url('type_of_loss') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a></td></tr>
 </thead>
 	</table></form>        </div>
 </div>

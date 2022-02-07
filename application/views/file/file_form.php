@@ -116,13 +116,7 @@
 											<?php } ?>
 										</select></td>
 								</tr>
-								<tr>
-									<td>Total Fee <?php echo form_error('fee_all') ?></td>
-									<td>
-										<input autocomplete="off" required type="text" class="form-control" name="" id="rupiah" placeholder="Total Fee" value="<?php echo rupiah($fee_all) ?>" />
-										<input autocomplete="off" required type="hidden" class="form-control" name="fee_all" id="fee_all" placeholder="Total Fee" value="<?php echo $fee_all; ?>" />
-									</td>
-								</tr>
+								<input autocomplete="off" type="hidden" class="form-control" name="fee_all" id="fee_all" placeholder="Total Fee" value="<?php echo $fee_all; ?>" />
 								<input autocomplete="off" type="hidden" name="file_id" value="<?php echo $file_id; ?>" />
 								<input autocomplete="off" type="hidden" class="form-control" name="user_id" id="user_id" placeholder="User Id" value="<?= $this->fungsi->user_login()->user_id ?>" /></td>
 								</thead>
@@ -198,12 +192,16 @@
 					</div>
 					<div class="panel-body" style="overflow-x: scroll; ">
 						<button style="margin-bottom: 10px;" type="button" name="add_berkas2" id="add_berkas2" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add Remark</button>
-						<table class="table table-bordered " id="dynamic_field2">
+						<table class="table table-bordered table-sm" id="dynamic_field2">
 							<thead>
 								<tr>
 									<th>Current Position</th>
 									<th>Date</th>
-									<th>Secrtry</th>
+									<th>Secretary</th>
+									<th>Currency</th>
+									<th>Reserve</th>
+									<th>Claim</th>
+									<th>Adjusment</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -217,7 +215,7 @@
 									foreach ($detail_remark as $row) { ?>
 										<tr id="detil_remark<?= $row->detail_remark_id ?>">
 											<td>
-												<select required name="remark_id[]" class="form-control">
+												<select required name="remark_id[]" class="form-control" style="width: 150px;">
 													<option style="color: black;" value="">-- Pilih -- </option>
 													<?php foreach ($remark as $key => $data) { ?>
 														<?php if ($row->remark_id == $data->remark_id) { ?>
@@ -230,10 +228,10 @@
 
 											</td>
 											<td>
-												<input type="date" class="form-control" name="date[]" placeholder="" value="<?= $row->date ?>" />
+												<input style="width: 140px;" type="date" class="form-control" name="date[]" placeholder="" value="<?= $row->date ?>" />
 											</td>
 											<td>
-												<select name="secretary_id[]" class="form-control">
+												<select name="secretary_id[]" class="form-control" style="width: 100px;">
 													<option style="color: black;" value="">-- Pilih -- </option>
 													<?php foreach ($secretary as $key => $rows) { ?>
 														<?php if ($row->secretary_id == $rows->secretary_id) { ?>
@@ -243,7 +241,31 @@
 														<?php } ?>
 													<?php } ?>
 												</select>
+											</td>
 
+											<td>
+												<select name="currency_id[]" class="form-control" style="width: 70px;">
+													<option style="color: black;" value="">-- Pilih -- </option>
+													<?php foreach ($currency as $key => $rows) { ?>
+														<?php if ($row->currency_id == $rows->currency_id) { ?>
+															<option style="color: black;" value="<?php echo $rows->currency_id ?>" selected><?php echo $rows->currency_code ?></option>
+														<?php } else { ?>
+															<option style="color: black;" value="<?php echo $rows->currency_id ?>"><?php echo $rows->currency_code ?></option>
+														<?php } ?>
+													<?php } ?>
+												</select>
+											</td>
+											<td>
+												<input style="width: 100px;" type="text" class="form-control db_reserve" id="reserve_db_text<?= $row->detail_remark_id ?>" placeholder="" value="<?= rupiah($row->reserve)  ?>" />
+												<input style="width: 100px;" type="hidden" class="form-control" id="reserve_db<?= $row->detail_remark_id ?>" name="reserve[]" placeholder="" value="<?= $row->reserve  ?>" />
+											</td>
+											<td>
+												<input style="width: 100px;" type="text" class="form-control db_claim" id="claim_db_text<?= $row->detail_remark_id ?>" placeholder="" value="<?= rupiah($row->claim) ?>" />
+												<input style="width: 100px;" type="hidden" class="form-control" id="claim_db<?= $row->detail_remark_id ?>" name="claim[]" placeholder="" value="<?= $row->claim ?>" />
+											</td>
+											<td>
+												<input style="width: 100px;" type="text" class="form-control db_adj" id="adj_db_text<?= $row->detail_remark_id ?>" placeholder="" value="<?= rupiah($row->adj)  ?>" />
+												<input style="width: 100px;" type="hidden" class="form-control" id="adj_db<?= $row->detail_remark_id ?>" name="adj[]" placeholder="" value="<?= $row->adj  ?>" />
 											</td>
 											<td><button type="button" name="" id="" class="btn btn-danger btn-sm btn_remove2"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
 										</tr>
@@ -255,17 +277,17 @@
 				</div>
 				<?php if ($button == 'Create') { ?>
 					<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-					<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+					<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 				<?php } else { ?>
 					<?php $query = $this->db->query("SELECT * FROM official_receipt where file_id='$file_id'");
 					$cek = $query->num_rows(); ?>
 					<?php if ($cek > 0) { ?>
 						<button type="submit" class="btn btn-danger" disabled><i class="fas fa-save"></i> <?php echo $button ?></button>
-						<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+						<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 						<p>*Contact super admin to edit data</p>
 					<?php } else { ?>
 						<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-						<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+						<a href="<?php echo site_url('file') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 					<?php } ?>
 				<?php } ?>
 
@@ -314,8 +336,72 @@
 		$('#add_berkas2').click(function() {
 			i++;
 			$('#dynamic_field2').append('<tr id="row2' + i +
-				'"><td><select required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input required type="date" name="date[]" placeholder="" class="form-control " /></td><td><select name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_code ?> - <?php echo $data->secretary_name ?></option><?php } ?></select></td></td> <td><button type="button" name="remove" id="' +
+				'"><td><select style="width: 150px;" required name="remark_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($remark as $key => $data) { ?><option style="color:black" value="<?php echo $data->remark_id ?>"><?php echo $data->remark_code ?> - <?php echo $data->remark_name ?></option><?php } ?></select></td><td><input style="width: 140px;" required type="date" name="date[]" placeholder="" class="form-control " /></td><td><select style="width: 100px;" name="secretary_id[]" class="form-control theSelect" style="width: 100%;"><option value="" style="color:black">-- Pilih -- </option><?php foreach ($secretary as $key => $data) { ?><option style="color:black" value="<?php echo $data->secretary_id ?>"><?php echo $data->secretary_code ?> - <?php echo $data->secretary_name ?></option><?php } ?></select></td><td><select style="width: 70px;" name="currency_id[]" class="form-control"><option style="color: black;" value="">-- Pilih -- </option><?php foreach ($currency as $key => $rows) { ?><option style="color: black;" value="<?php echo $rows->currency_id ?>"><?php echo $rows->currency_code ?></option><?php } ?></select></td><td><input style="width: 100px;" type="text" class="form-control" id="reserve' + i + '" placeholder="" value="" /><input style="width: 100px;" type="text" class="form-control" id="reserve_asli' + i + '" name="reserve[]" placeholder="" value="" /> </td><td><input style="width: 100px;" type="text" class="form-control" id="claim' + i + '"  placeholder="" value="" /> <input style="width: 100px;" type="text" class="form-control" id="claim_asli' + i + '" name="claim[]" placeholder="" value="" /></td><td><input style="width: 100px;" type="text" class="form-control" id="adj' + i + '" value=""  /> <input style="width: 100px;" type="text" class="form-control" id="adj_asli' + i + '" name="adj[]" value=""  /></td><td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove2"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
+			var adj = 'adj' + i
+			var claim = 'claim' + i
+			var reserve = 'reserve' + i
+			//adj
+			var tanpa_rupiah_expense = document.getElementById(adj);
+			if (tanpa_rupiah_expense) {
+				tanpa_rupiah_expense.addEventListener('keyup', function(e) {
+					tanpa_rupiah_expense.value = formatRupiah(this.value);
+					$('#adj_asli' + i).val(tanpa_rupiah_expense.value.replace(/\./g, ''))
+				});
+			}
+			//claim
+			var claim_rupiah_expense = document.getElementById(claim);
+			if (claim_rupiah_expense) {
+				claim_rupiah_expense.addEventListener('keyup', function(e) {
+					claim_rupiah_expense.value = formatRupiah(this.value);
+					$('#claim_asli' + i).val(claim_rupiah_expense.value.replace(/\./g, ''))
+				});
+			}
+			//reverse
+			var reverse_rupiah_expense = document.getElementById(reserve);
+			if (reverse_rupiah_expense) {
+				reverse_rupiah_expense.addEventListener('keyup', function(e) {
+					reverse_rupiah_expense.value = formatRupiah(this.value);
+					$('#reserve_asli' + i).val(reverse_rupiah_expense.value.replace(/\./g, ''))
+				});
+			}
+		});
+
+		// untuk hadle detail remark ketika update adj
+		$(document).on('keyup', '.db_adj', function() {
+			var id = $(this).closest('input').attr('id');
+			var strBaru = id.replace('adj_db_text', 'adj_db');
+			var a = document.getElementById(id);
+			if (a) {
+				a.addEventListener('keyup', function(e) {
+					a.value = formatRupiah(this.value);
+					$('#'+strBaru).val(a.value.replace(/\./g, ''))
+				});
+			}
+		});
+		// untuk hadle detail remark ketika update claim
+		$(document).on('keyup', '.db_claim', function() {
+			var id2 = $(this).closest('input').attr('id');
+			var strBaru2 = id2.replace('claim_db_text', 'claim_db');
+			var a2 = document.getElementById(id2);
+			if (a2) {
+				a2.addEventListener('keyup', function(e) {
+					a2.value = formatRupiah(this.value);
+					$('#'+strBaru2).val(a2.value.replace(/\./g, ''))
+				});
+			}
+		});
+		// untuk hadle detail remark ketika update reserve
+		$(document).on('keyup', '.db_reserve', function() {
+			var id3 = $(this).closest('input').attr('id');
+			var strBaru3 = id3.replace('reserve_db_text', 'reserve_db');
+			var a3 = document.getElementById(id3);
+			if (a3) {
+				a3.addEventListener('keyup', function(e) {
+					a3.value = formatRupiah(this.value);
+					$('#'+strBaru3).val(a3.value.replace(/\./g, ''))
+				});
+			}
 		});
 
 		$(document).on('click', '.btn_remove2', function() {
@@ -333,26 +419,17 @@
 </script>
 
 <script type="text/javascript">
-	var rupiah = document.getElementById('rupiah');
-	rupiah.addEventListener('keyup', function(e) {
-		rupiah.value = formatRupiah(this.value, 'Rp. ');
-		$('#fee_all').val(rupiah.value.replace(/\./g, ''))
-	});
-
 	function formatRupiah(angka, prefix) {
 		var number_string = angka.replace(/[^,\d]/g, '').toString(),
 			split = number_string.split(','),
 			sisa = split[0].length % 3,
 			rupiah = split[0].substr(0, sisa),
 			ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-		// tambahkan titik jika yang di input sudah menjadi angka ribuan
 		if (ribuan) {
 			separator = sisa ? '.' : '';
 			rupiah += separator + ribuan.join('.');
 		}
-
 		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-		return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+		return rupiah;
 	}
 </script>

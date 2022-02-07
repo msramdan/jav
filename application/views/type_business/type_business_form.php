@@ -20,7 +20,7 @@
 	    <tr><td >Type Business Name <?php echo form_error('type_business_name') ?></td><td><input type="text" class="form-control" name="type_business_name" id="type_business_name" placeholder="Type Business Name" value="<?php echo $type_business_name; ?>" /></td></tr>
 	    <tr><td></td><td><input type="hidden" name="type_business_id" value="<?php echo $type_business_id; ?>" /> 
 	    <button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button> 
-	    <a href="<?php echo site_url('type_business') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a></td></tr>
+	    <a href="<?php echo site_url('type_business') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a></td></tr>
 </thead>
 	</table></form>        </div>
 </div>

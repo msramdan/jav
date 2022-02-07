@@ -103,7 +103,7 @@
 				</div>
 
 				<div class="navbar-item dropdown">
-					<a href="<?= base_url() ?>assets/web/index-kenburns.html" target="_blank" class="navbar-link dropdown-toggle icon">
+					<a href="<?= base_url() ?>" target="_blank" class="navbar-link dropdown-toggle icon">
 						<img src="<?= base_url() ?>assets/assets/image.webp" alt="Halaman Website" height="27px">
 						Visit Website
 					</a>
@@ -245,9 +245,20 @@
 <script>
 	//datatable
 	$('#data-table-default').DataTable({
-		responsive: true
+		responsive: true,
+		
 	});
 	$('#data-table-default2').DataTable({
 		responsive: true
 	});
+
+	$('#table-no-att').DataTable({
+		responsive: true,
+		"searching": false,
+		"lengthChange": false,
+		"paging":   false,
+        "ordering": false,
+        "info":     false
+	});
 </script>
+

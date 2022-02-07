@@ -111,11 +111,8 @@
                     <th style="width: 50%;border: 1 !important;text-align: center;">Jakarta, <?= date('d-F-Y') ?></th>
                 </tr>
 				<tr> 
-                    <th style="width: 50%;border: 1 !important;vertical-align: text-bottom;height:40"></th>
-                    <th style="width: 50%;border: 1 !important;vertical-align: text-bottom;height:40">
-					<center>
-						<img src="assets/ttd.jpg" alt="" height="200%" >
-					</center>
+                    <th style="width: 50%;border: 1 !important;vertical-align: text-bottom;height:60"></th>
+                    <th style="width: 50%;border: 1 !important;vertical-align: text-bottom;height:60">
 				</th>
                 </tr>
 				<tr> 

@@ -18,7 +18,7 @@ class User_model extends CI_Model
     // get all
     function get_all()
     {
-         $this->db->join('level', 'level.level_id = user.level_id', 'left');
+        $this->db->join('level', 'level.level_id = user.level_id', 'left');
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }

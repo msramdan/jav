@@ -76,7 +76,17 @@ class Official_receipt extends CI_Controller
 	public function create_action()
 	{
 		is_allowed($this->uri->segment(1), 'create');
+		$file_id = $this->input->post('file_id');
 		if (isset($_POST['process_simpan'])) {
+			$query = $this->db->query("SELECT * FROM official_receipt where file_id='$file_id'");
+			$cek = $query->num_rows();
+			if($cek < 1){
+				$file_data = array(
+					'fee_all' => $this->input->post('fee_all'),
+				);
+				$this->File_model->update($this->input->post('file_id', TRUE), $file_data);
+			}
+
 			$data = array(
 				'or_no' => $this->input->post('or_no'),
 				'file_id' => $this->input->post('file_id'),

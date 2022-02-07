@@ -210,31 +210,6 @@
 			$(this).toggleClass("open");
 		});
 		
-		// AJAX CONTACT FORM
-        $(".formcontact").on("submit", function() {
-            $(".output_message").text("Loading...");
-
-            var form = $(this);
-            $.ajax({
-                url: form.attr("action"),
-                method: form.attr("method"),
-                data: form.serialize(),
-                success: function(result) {
-                    if (result == "success") {
-						$(".formcontact").find(".output_message_holder").addClass("d-block");
-						$(".formcontact").find(".output_message").addClass("success");
-                        $(".output_message").text("Message Sent!");
-                    } else {
-                        $(".formcontact").find(".output_message_holder").addClass("d-block");
-						$(".formcontact").find(".output_message").addClass("error");
-                        $(".output_message").text("Error Sending email!");
-                    }
-                }
-            });
-
-            return false;
-        });
-		
 	});
 	
 	$(window).on("scroll", function() {

@@ -28,7 +28,7 @@
 								<td></td>
 								<td><input type="hidden" name="religion_id" value="<?php echo $religion_id; ?>" />
 									<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-									<a href="<?php echo site_url('religion') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+									<a href="<?php echo site_url('religion') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 								</td>
 							</tr>
 					</thead>

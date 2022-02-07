@@ -26,7 +26,7 @@
 	    <tr><td >Npwp <?php echo form_error('npwp') ?></td><td><input type="text" class="form-control" name="npwp" id="npwp" placeholder="Npwp" value="<?php echo $npwp; ?>" /></td></tr>
 	    <tr><td></td><td><input type="hidden" name="broker_id" value="<?php echo $broker_id; ?>" /> 
 	    <button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button> 
-	    <a href="<?php echo site_url('broker') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a></td></tr>
+	    <a href="<?php echo site_url('broker') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a></td></tr>
 </thead>
 	</table></form>        </div>
 </div>

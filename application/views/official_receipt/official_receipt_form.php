@@ -120,27 +120,36 @@
 									<div class="row mt-4">
 										<div class="col-md-6">
 											<div class="row form-group">
+
+												<div class="col-md-6 mb-2">
+													<label class="form-label" for="percentage">Total Fee</label>
+													<div class="input-group mb-3">
+														<div style="width: 25%;" class="input-group-text"><span id="text_total_fee"></span></div>
+														<input class="form-control" type="text" id="total_fee_text" name="total_fee_text" placeholder="Total Fee">
+														<input class="form-control" type="hidden" id="total_fee" name="total_fee" placeholder="Total Fee">
+													</div>
+												</div>
+
+
 												<div class="col-md-6 mb-2">
 													<label class="form-label" for="percentage">Percentage (%) </label>
-													<input class="form-control" type="hidden" id="total_fee" name="total_fee" placeholder="">
 													<div class="input-group mb-3">
-
 														<input readonly class="form-control" type="text" id="percentage" name="percentage" placeholder="Percentage">
 														<div style="width: 25%;" class="input-group-text"><span id="">%</span></div>
 													</div>
 												</div>
-
-												<div class="col-md-6 mb-2">
-													<label class="form-label" for="fee">Fee</label>
+											</div>
+											<div class="row form-group">
+												<div class="col-md-6 mb-1">
+													<label class="form-label" for="fee">Fee Insurer</label>
 
 													<div class="input-group mb-3">
 														<div style="width: 25%;" class="input-group-text"><span id="text_fee"></span></div>
-														<input readonly class="form-control" type="text" id="fee_text" name="fee_text" placeholder="Fee">
-														<input readonly class="form-control" type="hidden" id="fee" name="fee" placeholder="Fee">
+														<input readonly class="form-control" type="text" id="fee_text" name="fee_text" placeholder="Fee Insurer">
+														<input readonly class="form-control" type="hidden" id="fee" name="fee" placeholder="Fee ">
 													</div>
 												</div>
-											</div>
-											<div class="row form-group">
+
 												<div class="col-md-6 mb-1">
 													<label class="form-label" for="expense">Expense</label>
 
@@ -150,6 +159,10 @@
 														<input value="0" min="0" class="form-control" type="hidden" id="expense" name="expense" placeholder="Expense">
 													</div>
 												</div>
+
+											</div>
+											<div class="row form-group">
+
 												<div class="col-md-6 mb-1">
 													<label class="form-label" for="discount">Discount</label>
 
@@ -159,13 +172,11 @@
 														<input value="0" min="0" class="form-control" type="hidden" id="discount" name="discount" placeholder="Discount">
 													</div>
 												</div>
-											</div>
-											<div class="row form-group">
-												<div class="col-md-12 mb-3">
-													<label class="form-label" for="grand_total">Grand Total</label>
 
+												<div class="col-md-6 mb-1">
+													<label class="form-label" for="grand_total">Grand Total</label>
 													<div class="input-group mb-3">
-														<div style="width: 13%;" class="input-group-text"><span id="text_grand_total"></span></div>
+														<div style="width: 25%;" class="input-group-text"><span id="text_grand_total"></span></div>
 														<input readonly class="form-control" type="text" id="grand_total_text" name="grand_total_text" placeholder="Grand Total">
 														<input readonly class="form-control" type="hidden" id="grand_total" name="grand_total" placeholder="Grand Total">
 													</div>
@@ -207,7 +218,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<button id="simpan_data" type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-												<a href="<?php echo site_url('official_receipt') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+												<a href="<?php echo site_url('official_receipt') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 											</div>
 										</div>
 									</div>
@@ -240,7 +251,6 @@
 	const percentage = $('#percentage')
 	const fee = $('#fee')
 	const total_fee = $('#total_fee')
-
 	ref_no_id.change(function() {
 		let file_id = $(this).val()
 		let noTable = 1
@@ -276,10 +286,12 @@
 			},
 			success: function(res) {
 				total_fee.val(res)
+				$('#total_fee_text').val(convertToRupiah(res))
+				if(res>0){
+					$('#total_fee_text').attr('readonly', true);
+				}
 			}
 		});
-
-
 	})
 
 	currency_id.change(function() {
@@ -307,6 +319,7 @@
 				$('#text_expense').html(res)
 				$('#text_discount').html(res)
 				$('#text_fee').html(res)
+				$('#text_total_fee').html(res)
 				$('#text_grand_total').html(res)
 			}
 		});
@@ -338,6 +351,10 @@
 		let expense = $('#expense').val()
 		var vat = $(".message_pri:checked").val();
 		// console.log(vat)
+		if (!total_fee) {
+			total_fee = 0
+		}
+
 		if (!discount) {
 			discount = 0
 		}
@@ -364,7 +381,7 @@
 			$('#grand_total').val('')
 		}
 	}
-	$(document).on('keyup mouseup', '#discount_text, #expense_text', function() {
+	$(document).on('keyup mouseup', '#discount_text, #expense_text,#total_fee_text', function() {
 		calculate()
 	})
 
@@ -376,6 +393,7 @@
 <script>
 	$("#simpan_data").click(function() {
 		var ref_no_id2 = $('#ref_no_id').val();
+		var fee_all = $('#total_fee').val();
 		var or_no2 = $('#or_no').val();
 		var insurer_id2 = $('#insurer_id').val();
 		var currency_id2 = $('#currency_id').val();
@@ -409,6 +427,7 @@
 					data: {
 						'process_simpan': true,
 						'or_no': or_no2,
+						'fee_all': fee_all,
 						'file_id': ref_no_id2,
 						'or_date': or_date2,
 						'invoice_no': invoice_no2,
@@ -450,6 +469,12 @@
 		$('#expense').val(tanpa_rupiah_expense.value.replace(/\./g, ''))
 	});
 
+	var fee_total_rupiah = document.getElementById('total_fee_text');
+	fee_total_rupiah.addEventListener('keyup', function(e) {
+		fee_total_rupiah.value = formatRupiah(this.value);
+		$('#total_fee').val(fee_total_rupiah.value.replace(/\./g, ''))
+	});
+
 	var dicount_tanpa_rupiah = document.getElementById('discount_text');
 	dicount_tanpa_rupiah.addEventListener('keyup', function(e) {
 		dicount_tanpa_rupiah.value = formatRupiah(this.value);
@@ -470,9 +495,8 @@
 			separator = sisa ? '.' : '';
 			rupiah += separator + ribuan.join('.');
 		}
-
 		rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-		return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+		return rupiah;
 	}
 
 	function convertToRupiah(angka) {

@@ -28,7 +28,7 @@
 								<td></td>
 								<td><input type="hidden" name="adjuster_id" value="<?php echo $adjuster_id; ?>" />
 									<button type="submit" class="btn btn-danger"><i class="fas fa-save"></i> <?php echo $button ?></button>
-									<a href="<?php echo site_url('adjuster') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Kembali</a>
+									<a href="<?php echo site_url('adjuster') ?>" class="btn btn-info"><i class="fas fa-undo"></i> Back</a>
 								</td>
 							</tr>
 					</thead>
